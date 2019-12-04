@@ -1,0 +1,71 @@
+--- 
+title: "Estadística para Contadores y Auditores con R"
+author: 
+ - "Oswaldo Navarrete Carreño"
+ - "María Alexandra Chavez P."
+ 
+date: "."
+site: bookdown::bookdown_site
+documentclass: krantz
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+description: "Libro de Estadística para Contadores y Auditores con R"
+github-repo: "oswnavarre/AEDFR"
+cover-image: "images/cover.png"
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(fig.pos = 'h',fig.align = 'center')
+library(kableExtra)
+library(tidyverse)
+library(gridExtra)
+library(latex2exp)
+library(tinytex)
+library(formatR)
+library(VGAM)
+library(methods)
+library(fGarch)
+library(DescTools)
+```
+
+# ¿A quién va dirigido este libro?
+
+Este libro no es una introducción a la estadística. En la presente obra se intenta hacer un repaso de algunos temas de estadística que debe conocer quien desee hacer investigación en Contabilidad, en Auditoría o quizás en alguna ciencia social. Es probable que se omitan algunas cosas pero la retroalimentación de los lectores de esta obra será importante para su crecimiento.
+
+En este texto se presentan, discuten y aplican los conceptos. La presentación de los conceptos es realizada pensando en un diálogo entre el autor y el lector, sin descuidar la formalidad de las expresiones matemáticas. Para la discusión y aplicación de los conceptos, se va mostrando al usuario como implementar el análisis estadístico en R. 
+
+Este libro fue desarrollado con el paquete  `bookdown` que permite generar libros desde la consola de Rstudio una buena guía para empezar es @R-bookdown, la ventaja de usar este paquete es que se genera todo el contenido del libro [@xie2015], como índices, tablas, índices de tablas, índices de figuras mientras se desarrolla el análisis estadístico [@R-knitr]. Este paquete usa una variación de un lenguaje de marcado llamado Markdown [@R-rmarkdown] 
+
+Para aprovechar al máximo este libro se recomienda tener a mano una computadora con R y Rstudio instalados, a fin de poder ir ejecutando los códigos que se muestran. Los scripts y los conjuntos de datos que se presentan pueden ser descargados de <http://oswaldonavarrete.info/datos-libro/>
+
+Aunque la obra tiene un enfoque práctico, el lector no debe olvidar que aprender a usar R no implica saber estadística y que los programas estadísticos no brindan soluciones si el usuario no conoce los conceptos que deben ser aplicados. 
+
+
+
+## ¿Qué es R?
+
+El análisis de datos requiere una inversión de tiempo considerable en obtener, fusionar, limpiar, transformar, ordenar, visualizar, analizar, modelar, evaluar y desarrollar modelos de los datos. Todas estas actividades generalmente implican interactuar con nuestros datos a un nivel sotisficado y elevado, esto implica usar un lenguaje mediante el cual expresamos nuestro trabajo. En este libro se presenta la escritura formal en un lenguaje de programación que sirve para el análisis de datos. Y es a través de este lenguaje que realizaremos el procesamiento de nuestros datos.
+
+Los lenguajes de programación, como cualquier lenguaje, tienen sus reglas propias que muchas veces son más rígidas que las reglas de los lenguajes que usamos para comunicarnos diariamente. Estas reglas se dividen en sintaxis que se refiere a las reglas para producir oraciones y en semántica que se refiere al significado de cada palabra.
+
+Existen muchos lenguajes de programación por ejemplo Python, Matlab, Wolfram, sin embargo en este libro se trabaja con un lenguaje de programación sencillo que ha crecido y evolucionado mucho los últimos años y que proviene de la misma comunidad estadística. 
+
+R es un lenguaje y entorno para computación estadística y gráficos. En los últimos años el uso del programa estadístico R ha ido en aumento. Puede ser descargado de <https://cran.r-project.org/> [@R-base]. 
+
+En este texto suponemos que el lector no tiene conocimiento, familiaridad o experiencia con la sintaxis o la semántica de R. Estas se irán presentando a lo largo del libro, pensando exclusivamente en la programación sobre los datos. El entendimiento de la sintaxis y la semántica se dará por medio de los diferentes ejemplos que se presentan en el texto.  
+ 
+## ¿Qué es Rstudio? 
+
+RStudio es un entorno de desarrollo integrado (IDE por sus siglas en inglés) que ayuda a explotar todas las capacidades de R. Rstudio se descarga de la página <https://www.rstudio.com/>. Puede ser instalado en casi todos los sistemas operativos de escritorio. También puede ser instalado en un servidor que funciones con el sistema operativo GNU/Linux. En la sección \@ref(primerR) se explica el uso de Rstudio.
+
+
+## Paquetes {#packages}
+
+La potencia de R nace de los usuarios y de la inmensa comunidad de usuarios que por si mismos extienden el programa, debido a su naturaleza de código abierto. Cualquier persona puede contribuir a R, mediante paquetes.
+
+Un **paquete** es una colección de comandos para una tarea particular. Un  **comando** es una instrucción en lenguaje de computadora, que sirve para indicarle a la computadora lo que debe hacer. Los paquetes generalmente necesitan de funciones o comandos de otros paquetes. 
+
+Los paquetes están disponibles principalmente en "la red completa de archivos R"  (*the comprehensive R Archive Network* CRAN por sus siglas en inglés), en la actualidad existen cerca de $15\;000$ paquetes disponibles. Otros sitios donde se puede encontrar paquetes son el proyecto Bioconductor <http://www.bioconductor.org>, r-forge <https://r-forge.r-project.org/>, Github <https://github.com/languages/R> y la página de código de Google <https://code.google.com>
+
+En este libro se usan los paquetes `dplyr`, `ggplot2`, `tidyr`, `BSDA`, `agricolae` y `Desctools`. Los tres primeros pertenecen al `tidyverse`, el `tidyverse` es una colección de paquetes diseñados para la ciencia de datos. Todos los paquetes comparten una filosofía de diseño, gramática y estructura subyacente de datos. 
