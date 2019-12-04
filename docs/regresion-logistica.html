@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.4 Regresión logística | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.4 Regresión logística | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.4 Regresión logística | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="mult.html">
+<link rel="next" href="ejercicios-2.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regresion-logistica" class="section level2">
+<h2><span class="header-section-number">5.4</span> Regresión logística</h2>
+<p>Los métodos de regresión estudiados en las secciones <a href="lineal.html#lineal">5.2</a> y <a href="mult.html#mult">5.3</a> se usan para modelar la relación entre una variable cuantitativa y una o más variables explicativas. En esta sección se explican métodos usados cuando la variable de respuesta es una variable cualiitativa o categórica con dos posibles valores o binaria. Ejemplos de variables de este tipo son si un estudiante aprueba o no una materia, si una persona recibe o no un crédito bancario <span class="citation">(Kleinbaum and Klein <a href="#ref-kleinbaum2009">2009</a>)</span>.</p>
+<p>Llamaremos a los dos posibles resultados de la variable categórica “éxito” o “fracaso” y los representamos con 1 o 0 respectivamente. La media es la proporción de 1s dentro de nuestros datos, podríamos definir a <span class="math inline">\(p\)</span> como la probabilidad de éxito <span class="math inline">\(p=P(\text{éxito})\)</span>. Nuestros datos tienen por lo menos una variable explicativa <span class="math inline">\(x\)</span> y la probabilidad <span class="math inline">\(p\)</span> dependerá de esta variable explicativa. Por ejemplo, supongamos que estamos estudiando si una empresa es auditada por una Big Four. En este caso <span class="math inline">\(p\)</span> es la probabilidad de ser auditado por una Big Four y algunas de las posibles variables explicativas son el tamaño de la empresa, el ingreso por ventas, el valor de las utilidades. Como en la regresión lineal múltiple, las variables explicativas pueden ser cuantitativas o cualitativas. La regresión logística es un método para describir ese tipo de relaciones. En la figura <a href="regresion-logistica.html#fig:logistic">5.13</a> se aprecia una variable de respuesta cualitativa binaria.</p>
+<div class="figure" style="text-align: center"><span id="fig:logistic"></span>
+<img src="EPCA_files/figure-html/logistic-1.png" alt="Variable de respuesta cualitativa binaria" width="60%" />
+<p class="caption">
+Figura 5.13: Variable de respuesta cualitativa binaria
+</p>
+</div>
+<p>En regresión logística se trabaja con la probabilidad de éxito sobre la probabilidad de fracaso, esto se lo conoce como <em>odds</em> esta palabra no tiene una traducción al español que sea ampliamente aceptada aunque su traducción más precisa puede ser <em>posibilidades</em>. Si <span class="math inline">\(p\)</span> es la probabilidad de éxito, <span class="math inline">\(1-p\)</span> es la probabilidad de fracaso.</p>
+<p><span class="math display" id="eq:odds">\[\begin{equation} 
+  odds = \dfrac{p}{1-p}
+  \tag{5.23}
+\end{equation}\]</span></p>
+<p>¿cómo se interpreta un odds? supongamos que en un grupo de 100 empresas 80 han presentado su declaración de impuestos a tiempo y 20 no lo han hecho. La probabilidad <span class="math inline">\(p\)</span> de presentar la declaración a tiempo es:</p>
+<p><span class="math display">\[p=\dfrac{80}{100}=0.80\]</span>
+Mientras que la probabilidad de no declarar a tiempo es <span class="math inline">\(1-p=1-0.80=0.20\)</span>. De esta forma el odds de presentar la declaración a tiempo es:</p>
+<p><span class="math display">\[ odds = \dfrac{p}{1-p} = \dfrac{0.80}{0.20}=4\]</span>
+Las posibilidades de que una empresa declare a tiempo sus impuestos es 4 a 1.</p>
+<div id="modelo-de-regresion-logistica" class="section level3">
+<h3><span class="header-section-number">5.4.1</span> Modelo de regresión logística</h3>
+<p>En la regresión lineal simple se modela la media de la variable dependiente <span class="math inline">\(y\)</span> como una función lineal de la variable independiente <span class="math inline">\(\mu_y=\beta_0+\beta_1x\)</span>. Cuando <span class="math inline">\(y\)</span> solo toma valores de <span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>, el promedio es la probabilidad <span class="math inline">\(p\)</span> de éxito. En la regresión logística se expresa la media <span class="math inline">\(p\)</span> en términos de una variable explicativa <span class="math inline">\(x\)</span>. Podríamos tratar de expresar <span class="math inline">\(p\)</span> y <span class="math inline">\(x\)</span> como en la regresión lineal simple, en términos matemáticos, <span class="math inline">\(p=\beta_0+\beta_1x\)</span> como se aprecia en la figura <a href="regresion-logistica.html#fig:logistic1">5.14</a> un ajuste de este tipo no sería lo más conveniente puesto que en algunas ocasiones valores muy grandes o muy pequeños de <span class="math inline">\(x\)</span> darán como resultados valores de <span class="math inline">\(\beta_0+\beta_1x\)</span> que saldrán del rango de valores de <span class="math inline">\(p\)</span>, recuerde que <span class="math inline">\(0\leq p \leq 1\)</span> o más precisamente <span class="math inline">\(p\)</span> solo puede ser <span class="math inline">\(0\)</span> o <span class="math inline">\(1\)</span>.</p>
+<div class="figure" style="text-align: center"><span id="fig:logistic1"></span>
+<img src="EPCA_files/figure-html/logistic1-1.png" alt="Ajuste lineal a una variable de respuesta cualitativa binaria" width="60%" />
+<p class="caption">
+Figura 5.14: Ajuste lineal a una variable de respuesta cualitativa binaria
+</p>
+</div>
+<p>Para resolver este inconveniente, en la regresión logística se trabaja con el logaritmo natural del odds o <strong>logit</strong>, en este texto usamos <span class="math inline">\(\log\)</span> para logaritmo natural en lugar de <span class="math inline">\(\ln\)</span>. Modelamos el <span class="math inline">\(\log\left(\text{odds}\right)\)</span> como una función lineal de la variable independiente o explicativa.</p>
+<p><span class="math display" id="eq:logit">\[\begin{equation}
+\text{logit}\left(p\right) = \log \left(\text{odds}\right) =  \log \left( \dfrac{p}{1-p}\right) = \beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \ldots + \beta_n x_n
+    \tag{5.24}
+\end{equation}\]</span></p>
+<p>Debido a que <span class="math inline">\(0 \leq p \leq 1\)</span> el odds está en el intervalo <span class="math inline">\(\left( 0, + \infty \right)\)</span>, lo que implica que <span class="math inline">\(\text{logit}\left(p\right)\)</span> se encuentra en <span class="math inline">\(\left( -\infty , + \infty \right)\)</span> y la expresión <span class="math inline">\(\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \ldots + \beta_n x_n\)</span> también cae en ese intervalo. Si tomamos la base <span class="math inline">\(e\)</span> en los miembros de la ecuación <a href="regresion-logistica.html#eq:logit">(5.24)</a>.</p>
+<p><span class="math display" id="eq:logit2">\[\begin{equation}
+  e^{\text{logit}\left(p\right)} = e^{\log \left(\text{odds}\right)} =  e^{\log \left( \dfrac{p}{1-p}\right)} = e^{\beta_0 + \beta_1 x_1 + \beta_2 x_2 + \beta_3 x_3 + \ldots + \beta_n x_n }
+    \tag{5.25}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:logit3">\[\begin{equation}
+   \text{odds} =  \dfrac{p}{1-p} = e^{\beta_0}e^{\beta_1 x_1}e^{\beta_2 x_2}e^{ \beta_3 x_3}\ldots e^{\beta_n x_n}
+    \tag{5.26}
+\end{equation}\]</span></p>
+<p>La inversa de la función <span class="math inline">\(\text{logit}\)</span> es la función logística. Si <span class="math inline">\(\text{logit}\left(\pi\right)=z\)</span>, entonces <span class="math inline">\(\pi = \dfrac{e^z}{1+e^z} = \dfrac{1}{1+e^{-z}}\)</span>.</p>
+<p>La estimación de los parámetros de la regresión logística (<span class="math inline">\(\beta\text{&#39;s}\)</span>) se hace por máxima verosimilitud <span class="citation">(Albert and Anderson <a href="#ref-albert1984">1984</a>)</span>. otros autores como <span class="citation">Cessie and Houwelingen (<a href="#ref-lecessie92">1992</a>)</span> han propuesto métodos diferentes a la máxima verosimilitud que intentan mejorar los estimadores, investigaciones como la de <span class="citation">Breslow and Holubkov (<a href="#ref-breslow97">1997</a>)</span> proponen mejoras a los estimadores a partir de la máxima verosimilitud. Un desarrollo completo de la obtención de los parámetros del modelo de regresión logística puede ser revisado en <span class="citation">Hosmer, Lemeshow, and Sturdivant (<a href="#ref-hosmer2013">2013</a>)</span>. Otros buenos recursos para revisar regresiòn logìstica son <span class="citation">Hilbe (<a href="#ref-hibe2017">2017</a>)</span> y <span class="citation">Hilbe (<a href="#ref-hibe2015">2015</a>)</span></p>
+</div>
+<div id="regresion-logistica-en-r" class="section level3">
+<h3><span class="header-section-number">5.4.2</span> Regresión logística en R</h3>
+<p>Para realizar regresión logística en R, nos despegaremos de datos financieros para ampliar al lector la perspectiva de las aplicaciones con este fin utilizamos el archivo <code>notas.csv</code>, este archivo tiene las notas finales de todas las materias de todas las carreras de todos los estudiantes de una universidad.</p>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">notas =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;notas.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)</a>
+<a class="sourceLine" id="cb132-2" title="2"></a>
+<a class="sourceLine" id="cb132-3" title="3"><span class="kw">str</span>(notas)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    38195 obs. of  5 variables:
+##  $ GENERO : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 2 1 2 2 1 1 2 1 2 ...
+##  $ NIVEL  : int  5 5 5 5 5 5 5 5 5 5 ...
+##  $ FINAL  : int  80 76 70 87 76 81 85 82 85 0 ...
+##  $ VECES  : int  1 1 1 1 1 1 1 1 1 2 ...
+##  $ CARRERA: Factor w/ 18 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>Podemos observar que el conjunto de datos tiene 38195 observaciones de 5 variables.</p>
+<ul>
+<li><code>GENERO</code>: contiene el género del estudiante.</li>
+<li><code>NIVEL</code>: nivel en el que se encuentra el estudiante.</li>
+<li><code>FINAL</code>: la nota final del estudiante.</li>
+<li><code>VECES</code>: el número de veces que el estudiante ha visto la materia.</li>
+<li><code>CARRERA</code>: la carrera del estudiante, son 18 carreras que existen en esta universidad.</li>
+</ul>
+<p>Para poder trabajar la regresión logística se deben hacer algunas transformaciones a los datos:</p>
+<ol style="list-style-type: decimal">
+<li>La variable <code>NIVEL</code> debe ser transformada en factor,</li>
+<li>Se debe crear una variable categórica binaria llamada <code>APRUEBA</code>, en esta variable se va a asignar <span class="math inline">\(1\)</span> cuando el estudiante aprueba y <span class="math inline">\(0\)</span> si el estudiante reprueba, para aprobar se necesita una nota mayor o igual a <span class="math inline">\(70\)</span>.</li>
+</ol>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1">notas<span class="op">$</span>NIVEL =<span class="st"> </span><span class="kw">as.factor</span>(notas<span class="op">$</span>NIVEL)</a>
+<a class="sourceLine" id="cb134-2" title="2"></a>
+<a class="sourceLine" id="cb134-3" title="3">notas =<span class="st"> </span>notas <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb134-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">APRUEBA =</span> <span class="kw">ifelse</span>(FINAL<span class="op">&gt;=</span><span class="dv">70</span>,<span class="dv">1</span>,<span class="dv">0</span>))</a>
+<a class="sourceLine" id="cb134-5" title="5"></a>
+<a class="sourceLine" id="cb134-6" title="6"><span class="kw">str</span>(notas)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    38195 obs. of  6 variables:
+##  $ GENERO : Factor w/ 2 levels &quot;F&quot;,&quot;M&quot;: 1 2 1 2 2 1 1 2 1 2 ...
+##  $ NIVEL  : Factor w/ 10 levels &quot;1&quot;,&quot;2&quot;,&quot;3&quot;,&quot;4&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
+##  $ FINAL  : int  80 76 70 87 76 81 85 82 85 0 ...
+##  $ VECES  : int  1 1 1 1 1 1 1 1 1 2 ...
+##  $ CARRERA: Factor w/ 18 levels &quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ APRUEBA: num  1 1 1 1 1 1 1 1 1 0 ...</code></pre>
+<p>Para realizar regresión logística en R se utiliza la función <code>glm()</code> del paquete <code>stats</code> este paquete se carga por defecto cuando abrimos R. El uso de esta función es <code>glm(formula , family = binomial, data)</code>. El primer modelo a ser analizado trata de explicar la aprobación en función del nivel del estudiante.</p>
+<div class="sourceCode" id="cb136"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb136-1" title="1">m5 =<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> APRUEBA <span class="op">~</span><span class="st"> </span>NIVEL, <span class="dt">family =</span> binomial, <span class="dt">data =</span> notas)</a>
+<a class="sourceLine" id="cb136-2" title="2"></a>
+<a class="sourceLine" id="cb136-3" title="3"><span class="kw">summary</span>(m5)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = APRUEBA ~ NIVEL, family = binomial, data = notas)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.6644   0.2467   0.3257   0.4485   0.7775  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.04156    0.04920  21.172   &lt;2e-16 ***
+## NIVEL2       0.66829    0.06327  10.562   &lt;2e-16 ***
+## NIVEL3       0.61476    0.07481   8.218   &lt;2e-16 ***
+## NIVEL4       1.25149    0.07241  17.283   &lt;2e-16 ***
+## NIVEL5       1.20446    0.07301  16.497   &lt;2e-16 ***
+## NIVEL6       1.86819    0.07462  25.037   &lt;2e-16 ***
+## NIVEL7       1.92574    0.08564  22.487   &lt;2e-16 ***
+## NIVEL8       2.47866    0.09783  25.337   &lt;2e-16 ***
+## NIVEL9       2.43521    0.10979  22.180   &lt;2e-16 ***
+## NIVEL10      2.23515    0.16295  13.716   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 22435  on 38194  degrees of freedom
+## Residual deviance: 20786  on 38185  degrees of freedom
+## AIC: 20806
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Los resultados de este modelo de regresión logística en el que se trata de explicar la probabilidad de aprobar de acuerdo al nivel en el que se encuentra el estudiante, indican que todos los coeficientes son estadisticamente significativos. El intercepto contiene el efecto para el primer nivel que se ha codificado con <code>NIVEL1</code>. El valor de <span class="math inline">\(1.04156\)</span> del intercepto corresponde al <span class="math inline">\(\log \left( \text{odds} \right)\)</span> de los estudiantes de primer nivel para aprobar, puesto que el primer nivel es el grupo de referencia. La probabilidad de que un estudiante de primer nivel apruebe sería <span class="math inline">\(\dfrac{e^{1.04156}}{1+e^{1.04156}} =\)</span> 0.7391509.</p>
+<p>Por otro lado el coeficiente estimado para el <code>NIVEL2</code>es <span class="math inline">\(0.66829\)</span> y corresponde al logaritmo de la división entre los odds (<strong>odds ratio</strong>) entre los estudiantes del segundo nivel y los del primer nivel:</p>
+<p><span class="math display">\[\log \left( \dfrac{\text{odds}_{NIVEL2}}{\text{odds}_{NIVEL1}}\right)=0.66829 \rightarrow \dfrac{\text{odds}_{NIVEL2}}{\text{odds}_{NIVEL1}}=e^{0.66829}=1.9509\rightarrow \text{odds}_{NIVEL2} = 1.9509\text{odds}_{NIVEL1}\]</span></p>
+<p>En términos de probabilidad, la probabilidad que un estudiante de segundo nivel apruebe sería:</p>
+<p><span class="math display">\[\dfrac{e^{1.04156+0.66829}}{1+e^{1.04156+0.66829}}=0.84734\]</span></p>
+<p>El lector puede hacer el ejercicio de calcular las probabilidades de que un estudiante de cualquier otro nivel apruebe.</p>
+<p>En el siguiente modelo consideramos el género y el nivel del estudiante.</p>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1">m6 =<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> APRUEBA <span class="op">~</span><span class="st"> </span>GENERO <span class="op">+</span><span class="st"> </span>NIVEL , <span class="dt">family =</span> binomial, <span class="dt">data =</span> notas)</a>
+<a class="sourceLine" id="cb138-2" title="2"></a>
+<a class="sourceLine" id="cb138-3" title="3"><span class="kw">summary</span>(m6)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = APRUEBA ~ GENERO + NIVEL, family = binomial, data = notas)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.7540   0.2677   0.3489   0.4884   0.8415  
+## 
+## Coefficients:
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  1.31441    0.05517   23.82   &lt;2e-16 ***
+## GENEROM     -0.45823    0.03934  -11.65   &lt;2e-16 ***
+## NIVEL2       0.67525    0.06354   10.63   &lt;2e-16 ***
+## NIVEL3       0.64245    0.07514    8.55   &lt;2e-16 ***
+## NIVEL4       1.25911    0.07266   17.33   &lt;2e-16 ***
+## NIVEL5       1.21007    0.07326   16.52   &lt;2e-16 ***
+## NIVEL6       1.86513    0.07483   24.93   &lt;2e-16 ***
+## NIVEL7       1.91203    0.08584   22.27   &lt;2e-16 ***
+## NIVEL8       2.45496    0.09800   25.05   &lt;2e-16 ***
+## NIVEL9       2.43311    0.10997   22.13   &lt;2e-16 ***
+## NIVEL10      2.35752    0.16341   14.43   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 22435  on 38194  degrees of freedom
+## Residual deviance: 20646  on 38184  degrees of freedom
+## AIC: 20668
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>Se aprecia que todos los coeficientes son estadistícamente significativos. El intercepto calculado contiene como grupo de referencia a las personas del primer nivel y de género femenino. El <span class="math inline">\(\log \left( \text{odds} \right)\)</span> es <span class="math inline">\(1.31441\)</span>. La probabilidad de que una mujer de primer nivel apruebe es <span class="math inline">\(\dfrac{e^{1.31441}}{1+e^{1.31441}}= 0.7883\)</span>. Mientras que la probabilidad de que un hombre de primer nivel apruebe es <span class="math inline">\(\dfrac{e^{1.31441-0.45823}}{1+e^{1.31441-0.45823}}= 0.7019\)</span>. De manera general si la persona es hombre, sin importar el nivel, la probabilidad de aprobar disminuye porque el logaritmo del odds ratio entre hombres y mujeres es <span class="math inline">\(-0.45823\)</span>:</p>
+<p><span class="math display">\[\log \left( \dfrac{\text{odds}_{M}}{\text{odds}_{F}}\right)=-0.45823 \rightarrow \dfrac{\text{odds}_{M}}{\text{odds}_{F}}=e^{-0.45823}=0.6324\rightarrow \text{odds}_{M} = 0.6324\text{odds}_{F}\]</span></p>
+<p>En el último modelo de regresión logística a ser analizado, no incluiremos el intercepto y además se incluirá la carrera como variable explicativa. Recordemos que para no incluir el intercepto en la fórmula incluimos <span class="math inline">\(-1\)</span> en el lado derecho.</p>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1">m7 =<span class="st"> </span><span class="kw">glm</span>(<span class="dt">formula =</span> APRUEBA <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>GENERO <span class="op">+</span><span class="st"> </span>NIVEL <span class="op">+</span><span class="st"> </span>CARRERA , <span class="dt">family =</span> binomial, <span class="dt">data =</span> notas)</a>
+<a class="sourceLine" id="cb140-2" title="2"></a>
+<a class="sourceLine" id="cb140-3" title="3"><span class="kw">summary</span>(m7)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = APRUEBA ~ -1 + GENERO + NIVEL + CARRERA, family = binomial, 
+##     data = notas)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.7644   0.2469   0.3212   0.4708   0.9953  
+## 
+## Coefficients:
+##          Estimate Std. Error z value Pr(&gt;|z|)    
+## GENEROF   0.37372    0.10841   3.447 0.000567 ***
+## GENEROM   0.05862    0.10822   0.542 0.588046    
+## NIVEL2    0.71739    0.06590  10.885  &lt; 2e-16 ***
+## NIVEL3    0.88510    0.08262  10.713  &lt; 2e-16 ***
+## NIVEL4    1.65685    0.08962  18.488  &lt; 2e-16 ***
+## NIVEL5    2.04907    0.11347  18.057  &lt; 2e-16 ***
+## NIVEL6    2.71639    0.11603  23.411  &lt; 2e-16 ***
+## NIVEL7    2.77840    0.12390  22.424  &lt; 2e-16 ***
+## NIVEL8    3.32764    0.13290  25.038  &lt; 2e-16 ***
+## NIVEL9    3.33283    0.14213  23.449  &lt; 2e-16 ***
+## NIVEL10   3.28128    0.19052  17.223  &lt; 2e-16 ***
+## CARRERAB  0.09223    0.08176   1.128 0.259313    
+## CARRERAC -0.14490    0.08737  -1.659 0.097208 .  
+## CARRERAD  0.38564    0.11433   3.373 0.000744 ***
+## CARRERAE  0.84836    0.10466   8.106 5.24e-16 ***
+## CARRERAF  0.42854    0.11346   3.777 0.000159 ***
+## CARRERAG  1.07833    0.12933   8.338  &lt; 2e-16 ***
+## CARRERAH  1.31292    0.12086  10.863  &lt; 2e-16 ***
+## CARRERAI  0.35486    0.13107   2.708 0.006779 ** 
+## CARRERAJ  0.38616    0.12128   3.184 0.001452 ** 
+## CARRERAK -0.20072    0.10806  -1.858 0.063238 .  
+## CARRERAL  0.16348    0.11737   1.393 0.163679    
+## CARRERAM -0.27429    0.09030  -3.038 0.002385 ** 
+## CARRERAN  0.89677    0.11749   7.633 2.30e-14 ***
+## CARRERAO  0.40041    0.12153   3.295 0.000985 ***
+## CARRERAP  1.11683    0.33795   3.305 0.000951 ***
+## CARRERAQ  1.80441    0.51495   3.504 0.000458 ***
+## CARRERAR  0.98461    0.12783   7.702 1.34e-14 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 52950  on 38195  degrees of freedom
+## Residual deviance: 20396  on 38167  degrees of freedom
+## AIC: 20452
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>En este caso observamos que el coeficiente correspondiente al género masculino no es significativo, los coeficientes correspondientes al nivel sí son significativos. Con respecto a las carreras los coeficientes de las carreras B y L no son significativos, mientras que los coeficientes de las carreras C y K son significativos a un nivel del <span class="math inline">\(10\%\)</span> de significancia. Nótese que para determinar la probabilidad de que apruebe un estudiante de la carrera A, se debe hacer que <span class="math inline">\(CARRERAB=CARRERAC=\ldots=CARRERAR=0\)</span> y si se quisiera determinar la probabilidad de que un estudinate del primer nivel apruebe se debe hacer <span class="math inline">\(NIVEL2=NIVEL3=\ldots=NIVEL10=0\)</span></p>
+
+</div>
+</div>
+<h3>Bibliografía</h3>
+<div id="refs" class="references">
+<div id="ref-albert1984">
+<p>Albert, A., and J. A. Anderson. 1984. “On the existence of maximum likelihood estimates in logistic regression models.” <em>Biometrika</em> 71 (1): 1–10. <a href="https://doi.org/10.1093/biomet/71.1.1">https://doi.org/10.1093/biomet/71.1.1</a>.</p>
+</div>
+<div id="ref-breslow97">
+<p>Breslow, Norman E., and Richard Holubkov. 1997. “Maximum Likelihood Estimation of Logistic Regression Parameters Under Two-Phase, Outcome-Dependent Sampling.” <em>Journal of the Royal Statistical Society: Series B (Statistical Methodology)</em> 59 (2): 447–61. <a href="https://doi.org/10.1111/1467-9868.00078">https://doi.org/10.1111/1467-9868.00078</a>.</p>
+</div>
+<div id="ref-lecessie92">
+<p>Cessie, S. le, and J. C. van Houwelingen. 1992. “Ridge Estimators in Logistic Regression.” <em>Journal of the Royal Statistical Society: Series C (Applied Statistics)</em> 41 (1): 191–201. <a href="https://doi.org/10.2307/2347628">https://doi.org/10.2307/2347628</a>.</p>
+</div>
+<div id="ref-hibe2015">
+<p>Hilbe, Joseph. 2015. <em>Practical Guide to Logistic Regression</em>. 1a. ed. Estados Unidos: CRC Press.</p>
+</div>
+<div id="ref-hibe2017">
+<p>Hilbe, Joseph. 2017. <em>Logistic Regression Models</em>. 1a. ed. Estados Unidos: CRC Press.</p>
+</div>
+<div id="ref-hosmer2013">
+<p>Hosmer, David, Stanley Lemeshow, and Rodney Sturdivant. 2013. <em>Applied Logistic Regression</em>. 3a. ed. Estados Unidos: Wiley.</p>
+</div>
+<div id="ref-kleinbaum2009">
+<p>Kleinbaum, David, and Mitchel Klein. 2009. <em>Logistic Regression. A Self-Learning Text</em>. 3a. ed. New York: Springer.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="mult.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ejercicios-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5.3 Regresión Múltiple | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5.3 Regresión Múltiple | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5.3 Regresión Múltiple | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="lineal.html">
+<link rel="next" href="regresion-logistica.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="mult" class="section level2">
+<h2><span class="header-section-number">5.3</span> Regresión Múltiple</h2>
+<p>La regresión lineal simple sólo permite tener una variable explicativa, pero en la vida real una variable de respuesta puede ser afectada por más de una variable explicativa. Por ejemplo la demanda puede verse afectada por el precio, pero también por el ingreso. La demanda puede ser expresada en función del precio y de los ingresos <span class="math inline">\(Demanda=f\left(Precio,Ingreso\right)\)</span>. La ecuación de regresión puede ser reescrita como:</p>
+<p><span class="math display" id="eq:regremul1">\[\begin{equation}
+\hat{Y}_i = \beta_0 + \beta_1 X_{1,i} + \beta_2 X_{2,i}  + \ldots + \beta_k X_{k,i}
+    \tag{5.14}
+\end{equation}\]</span></p>
+<p>El subíndice <span class="math inline">\(k,i\)</span> se entiende como el valor de la variable <span class="math inline">\(k\)</span> para la i-ésima observación. Como en la regresión simple <span class="math inline">\(Y_i\)</span> puede ser escrito como:</p>
+<p><span class="math display" id="eq:regremul2">\[\begin{equation}
+Y_i = \beta_0 + \beta_1 X_{1,i} + \beta_2 X_{2,i}  + \ldots + \beta_k X_{k,i} + \epsilon_i
+    \tag{5.15}
+\end{equation}\]</span></p>
+<p>Combinando las ecuaciones <a href="mult.html#eq:regremul1">(5.14)</a> y <a href="mult.html#eq:regremul2">(5.15)</a>. Se obtiene:</p>
+<p><span class="math display" id="eq:regremul3">\[\begin{equation}
+Y_i = \hat{Y}_i + \epsilon_i
+    \tag{5.16}
+\end{equation}\]</span></p>
+<p>Los principios usados en regresión múltiple son esencialmente los mismos que la regresión simple. Se determinan los coeficientes <span class="math inline">\(\beta_0,\beta_1,\beta_2,\ldots,\beta_k\)</span> minimizando la suma de los errores cuadráticos. También se obtiene un <span class="math inline">\(R^2\)</span> y se pueden realizar pruebas de hipótesis para los coeficientes.</p>
+<p>Al igual que en la regresión lineal simple, la fracción de la variación en la variable dependiente explicada por las variables independientes se lo puede calcular como en la ecuación <a href="lineal.html#eq:rscuared">(5.13)</a>:</p>
+<p><span class="math display" id="eq:rscuared2">\[\begin{equation}
+R^2 = 1 - \dfrac{SCE}{STC}
+    \tag{5.17}
+\end{equation}\]</span></p>
+<p>Si se añaden nuevas variables independientes a la regresión el valor del <span class="math inline">\(R^2\)</span> aumentará. Para entender esto, podemos pensar en un experimento en el cual añadimos variables independientes hasta que el total de variables independientes más la constante es igual al número de observaciones. Esto nos conducirá a un <span class="math inline">\(R^2\)</span> igual a <span class="math inline">\(1\)</span>. Entonces para poder explicar más de la variación de la variable dependiente simplemente adicionamos variables independientes sin importar si estas variables añadidas son realmente relevantes para la variable dependiente. Para obtener una medida más significativa de cuanta variación de la variable dependiente está siendo explicada, se ajusta el <span class="math inline">\(R^2\)</span> para compensar la pérdida de grados de libertad asociados a la inclusión de variables independientes adicionales. Este <span class="math inline">\(R^2\)</span> ajustado se calcula con la expresión de la ecuación <a href="mult.html#eq:rscuared3">(5.18)</a></p>
+<p><span class="math display" id="eq:rscuared3">\[\begin{equation}
+R^2 = 1 -\dfrac{n-1}{n-k-1} \dfrac{SCE}{STC}
+    \tag{5.18}
+\end{equation}\]</span></p>
+<p>La regresión múltiple se hace también con la función <code>lm(formula,datos)</code>, la diferencia es que en la fórmula se incluye más de una variable independiente.</p>
+<p>Para ejemplificar la regresión múltiple en R construiremos un modelo de regresión múltiple con la base <code>Ranking2018Comercio.csv</code>, se intentará explicar primero la utilidad de las empresas en función del número de empleados y las ventas. La ecuación de regresión sería:</p>
+<p><span class="math display" id="eq:modelo2">\[\begin{equation}
+  \text{Utilidad} = \beta_0 + \beta_1 \text{Empleados} + \beta_2 \text{Ventas} + \epsilon
+    \tag{5.19}
+\end{equation}\]</span></p>
+<p>Primero cargamos los datos. Una particularidad que tienen los datos es que algunas de las observaciones son inconsistentes en el sentido que reportan ventas iguales a 0, se filtrarán los datos de tal forma que solo se analizarán las empresas que han reportado ventas mayores a 0. Se seleccionará además la variable <code>TAMAÑO</code> para verificar más adelante si el tamaño de la empresa influye sobre las utilidades:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1">datos =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Ranking2018Comercio.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>,<span class="dt">sep=</span><span class="st">&quot;;&quot;</span>, <span class="dt">dec=</span><span class="st">&quot;,&quot;</span>)</a>
+<a class="sourceLine" id="cb124-2" title="2"></a>
+<a class="sourceLine" id="cb124-3" title="3">datos =<span class="st"> </span>datos <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb124-4" title="4"><span class="st">  </span><span class="kw">filter</span>(VENTAS<span class="op">&gt;</span><span class="dv">0</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb124-5" title="5"><span class="st">  </span><span class="kw">select</span>(UTILIDAD,EMPLEADOS,VENTAS,TAMA)</a>
+<a class="sourceLine" id="cb124-6" title="6"><span class="kw">attach</span>(datos)</a></code></pre></div>
+<p>Una vez cargados los datos graficamos los diagramas de dispersión por pares de variables para esto usaremos la función <code>pairs()</code> las variables para las que se quiere realizar son las tres primeras por lo que las seleccionamos indicando que del conjunto datos solo queremos las columnas de la 1 a la 3. En la figura <a href="mult.html#fig:pairs">5.12</a> se observa que cuando se relaciona la utilidad con los empleados si hay una tendencia creciente bien definida, mas cuando se relacionan las ventas ya sea con utilidad o con empleados la tendencia no está bien definida.</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="kw">pairs</span>(datos[,<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>])</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:pairs"></span>
+<img src="EPCA_files/figure-html/pairs-1.png" alt="Diagramas de Dispersión del Conjunto datos" width="60%" />
+<p class="caption">
+Figura 5.12: Diagramas de Dispersión del Conjunto datos
+</p>
+</div>
+<p>Construimos el modelo de regresión. Nótese que en la fórmula del lado de las variables independientes incluimos las dos variables ya mencionadas:</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">m2 =<span class="st"> </span><span class="kw">lm</span>(UTILIDAD <span class="op">~</span><span class="st"> </span>EMPLEADOS <span class="op">+</span><span class="st"> </span>VENTAS)</a>
+<a class="sourceLine" id="cb126-2" title="2"><span class="kw">summary</span>(m2)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = UTILIDAD ~ EMPLEADOS + VENTAS)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1193229     1031    12491    18190   484129 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -3.209e+04  6.344e+03  -5.059 7.71e-07 ***
+## EMPLEADOS    4.900e+03  2.203e+02  22.237  &lt; 2e-16 ***
+## VENTAS       3.343e-04  1.709e-03   0.196    0.845    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 101100 on 276 degrees of freedom
+## Multiple R-squared:  0.7622, Adjusted R-squared:  0.7605 
+## F-statistic: 442.4 on 2 and 276 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Se puede apreciar que con los coeficientes obtenidos la ecuación <a href="mult.html#eq:modelo2">(5.19)</a> sería:</p>
+<p><span class="math display" id="eq:modelo3">\[\begin{equation}
+  \text{Utilidad} = -32\;090 + 4\;900 \text{Empleados} + 0.0003343 \text{Ventas} + \epsilon
+    \tag{5.20}
+\end{equation}\]</span></p>
+<p>El intercepto y el coeficiente estimado para el número de empleados son significativos, no así el estimado para las ventas. La interpretación de cada coeficiente estimado es:</p>
+<ul>
+<li>Intercepto: una empresa sin empleados y con ventas iguales a 0 tiene utilidades de <span class="math inline">\(-32\;090\)</span> (Pérdidas)</li>
+<li>Empleados: por cada empleado adicional que tiene la empresa las utilidades aumentan en promedio <span class="math inline">\(4\;900\)</span> dólares</li>
+<li>Ventas: por cada dólar adicional de ventas las utilidades aumentan en promedio <span class="math inline">\(0.0003343\)</span></li>
+</ul>
+<p>El <span class="math inline">\(R^2\)</span> ajustado del modelo es <span class="math inline">\(0.7605\)</span>, se interpreta que el <span class="math inline">\(76.05\)</span>% de la variación de la utilidad es explicada por el número de empleados y las ventas. De acuerdo al estadístico <span class="math inline">\(F\)</span> y al valor <span class="math inline">\(p\)</span> de ese estadístico el modelo global es significativo.</p>
+<p>A continuación construiremos otro modelo en el que se tome en cuenta el tamaño de la empresa.</p>
+<p><span class="math display" id="eq:modelo4">\[\begin{equation}
+  \text{Utilidad} = \beta_0 + \beta_1 \text{Empleados} + \beta_2 \text{Ventas} + \beta_3 \text{Tamaño} + \epsilon
+    \tag{5.21}
+\end{equation}\]</span></p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">m3 =<span class="st"> </span><span class="kw">lm</span>(UTILIDAD <span class="op">~</span><span class="st"> </span>EMPLEADOS <span class="op">+</span><span class="st"> </span>VENTAS <span class="op">+</span><span class="st"> </span>TAMA)</a>
+<a class="sourceLine" id="cb128-2" title="2"><span class="kw">summary</span>(m3)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = UTILIDAD ~ EMPLEADOS + VENTAS + TAMA)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1117864    -6347     3970    14419   433603 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)      -2.555e+05  5.235e+04  -4.880 1.81e-06 ***
+## EMPLEADOS         4.961e+03  2.140e+02  23.182  &lt; 2e-16 ***
+## VENTAS            7.824e-03  2.376e-03   3.293 0.001122 ** 
+## TAMAMEDIANA       1.812e+05  5.230e+04   3.464 0.000618 ***
+## TAMAMICROEMPRESA  2.322e+05  5.298e+04   4.383 1.67e-05 ***
+## TAMAPEQUEÑA       2.221e+05  5.245e+04   4.236 3.12e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 98000 on 273 degrees of freedom
+## Multiple R-squared:  0.7791, Adjusted R-squared:  0.7751 
+## F-statistic: 192.6 on 5 and 273 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>En este caso todos los coeficientes son significativos. Para interpretar los coeficientes es necesario fijarse que en los coeficientes para el tamaño no se encuentra el tamaño grande puesto que este tamaño es tomado como base y su efecto está incluido en el intercepto. La interpretación de cada coeficiente es:</p>
+<ul>
+<li>Intercepto: cuando la empresa no tiene empleados, ni ventas pero es de tamaño grande las perdidas son en promedio de <span class="math inline">\(255\;500\)</span></li>
+<li>Empleados: por cada aumento de un empleado la utilidad promedio de las empresas aumenta en <span class="math inline">\(4\;961\)</span></li>
+<li>Ventas: por cada dólar adicional en ventas las utilidades aumentan en promedio <span class="math inline">\(0.007824\)</span> dólares, dicho de otra forma por cada <span class="math inline">\(1000\)</span> dólares de ventas las empresas tienen en promedio una utilidad de <span class="math inline">\(\$\;7.82\)</span>.</li>
+<li>Tamaño Mediana: cuando la empresa es mediana la utilidad aumenta en promedio <span class="math inline">\(181\;200\)</span> respecto a las empresas grandes</li>
+<li>Tamaño Microempresa: cuando la compañía es microempresa la utilidad aumenta en promedio <span class="math inline">\(232\;200\)</span> respecto a las empresas grandes</li>
+<li>Tamaño pequeña: cuando la empresa es pequeña la utilidad aumenta en promedio <span class="math inline">\(222\;100\)</span> respecto a las empresas grandes.</li>
+</ul>
+<p>El <span class="math inline">\(R^2\)</span> ajustado del modelo es <span class="math inline">\(0.7751\)</span>, el <span class="math inline">\(77.51\)</span>% de la variación de la utilidad es explicada por las variables independiente. De acuerdo al estadístico <span class="math inline">\(F\)</span> y al valor <span class="math inline">\(p\)</span> de ese estadístico el modelo global es significativo.</p>
+<p>Elaboraremos un modelo parecido al anterior pero sin intercepto, para crear un modelo de regresión sin intercepto al comienzo de las variables independientes escribimos <code>-1</code>.</p>
+<p><span class="math display" id="eq:modelo5">\[\begin{equation}
+  \text{Utilidad} =  \beta_1 \text{Empleados} + \beta_2 \text{Ventas} + \beta_3 \text{Tamaño} + \epsilon
+    \tag{5.22}
+\end{equation}\]</span></p>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1">m4 =<span class="st"> </span><span class="kw">lm</span>(UTILIDAD <span class="op">~</span><span class="st"> </span><span class="dv">-1</span> <span class="op">+</span><span class="st"> </span>EMPLEADOS <span class="op">+</span><span class="st"> </span>VENTAS <span class="op">+</span><span class="st"> </span>TAMA)</a>
+<a class="sourceLine" id="cb130-2" title="2"><span class="kw">summary</span>(m4)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = UTILIDAD ~ -1 + EMPLEADOS + VENTAS + TAMA)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -1117864    -6347     3970    14419   433603 
+## 
+## Coefficients:
+##                    Estimate Std. Error t value Pr(&gt;|t|)    
+## EMPLEADOS         4.961e+03  2.140e+02  23.182  &lt; 2e-16 ***
+## VENTAS            7.824e-03  2.376e-03   3.293 0.001122 ** 
+## TAMAGRANDE       -2.555e+05  5.235e+04  -4.880 1.81e-06 ***
+## TAMAMEDIANA      -7.430e+04  2.065e+04  -3.598 0.000381 ***
+## TAMAMICROEMPRESA -2.322e+04  9.000e+03  -2.580 0.010397 *  
+## TAMAPEQUEÑA      -3.330e+04  8.921e+03  -3.733 0.000230 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 98000 on 273 degrees of freedom
+## Multiple R-squared:  0.782,  Adjusted R-squared:  0.7772 
+## F-statistic: 163.2 on 6 and 273 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Cuando se quita el intercepto el efecto de este se traslada a un coeficiente que se le asigna a la categoría que en el modelo con intercepto se tomó como base. Los coeficientes son significativos. La interpretación de los coeficientes es:</p>
+<ul>
+<li>Empleados: por cada aumento de un empleado la utilidad promedio de las empresas aumenta en <span class="math inline">\(4\;961\)</span></li>
+<li>Ventas: por cada dólar adicional en ventas las utilidades aumentan en promedio <span class="math inline">\(0.007824\)</span> dólares, por cada <span class="math inline">\(1000\)</span> dólares de ventas las empresas tienen en promedio una utilidad de <span class="math inline">\(\$\;7.82\)</span>.</li>
+<li>Tamaño grande: las empresas de tamaño grande disminuyen en promedio su utilidad en <span class="math inline">\(255\;500\)</span></li>
+<li>Tamaño Mediana: cuando la empresa es mediana la utilidad disminuye en promedio <span class="math inline">\(74\;300\)</span>.</li>
+<li>Tamaño Microempresa: cuando la compañía es microempresa la utilidad disminuye en promedio <span class="math inline">\(23\;220\)</span>.</li>
+<li>Tamaño pequeña: cuando la empresa es pequeña la utilidad aumenta en promedio <span class="math inline">\(22\;210\)</span>.</li>
+</ul>
+<p>El <span class="math inline">\(R^2\)</span> ajustado del modelo es <span class="math inline">\(0.7772\)</span>, el <span class="math inline">\(77.72\)</span>% de la variación de la utilidad es explicada por las variables independiente. De acuerdo al estadístico <span class="math inline">\(F\)</span> y al valor <span class="math inline">\(p\)</span> de ese estadístico el modelo global es significativo.</p>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="lineal.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="regresion-logistica.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

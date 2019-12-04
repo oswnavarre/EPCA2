@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.3 Intervalos de confianza en R | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.3 Intervalos de confianza en R | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.3 Intervalos de confianza en R | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="ph.html">
+<link rel="next" href="pruebas-de-hipotesis-en-r.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intervalos-de-confianza-en-r" class="section level2">
+<h2><span class="header-section-number">4.3</span> Intervalos de confianza en R</h2>
+<div id="para-la-media" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Para la media</h3>
+<p>Recapitulando lo revisado en las secciones <a href="ic.html#jt">4.1.2.1</a> y <a href="ic.html#icsd">4.1.2.2</a> se definieron los intervalos de confianza para la media con <span class="math inline">\(\sigma\)</span> conocida y desconocida respectivamente. Como se mencionó antes el primer caso es un caso hipotético que sirve como una primera aproximación al concepto y la definición de intervalo de confianza. Mientras que el segundo caso es el escenario con el que frecuentemente se encuentra un investigador o un analista.</p>
+<p>Para el primer caso <code>R</code> no tiene una función definida en su instalación base, a manera de ejemplo hacemos algunas suposiciones para construir intervalos de confianza con la distribución normal. El paquete <code>BSDA</code> tiene la función <code>z-test( )</code> que también será utilizada. Mientras que para el segundo caso se tiene la función <code>t.test</code>, que como el lector ha de suponer tiene como objetivo principal realizar pruebas de hipóresis utilizando la distribución <span class="math inline">\(t\)</span> de Student. Esta función además permite obtener intervalos de confianza.</p>
+<p>En las dos subsecciones a continuación se trabajará con la variable <code>ACTIVOS</code> de las microempresas de la base de datos <code>Ranking2018Comercio.csv</code></p>
+<div id="musc" class="section level4">
+<h4><span class="header-section-number">4.3.1.1</span> <span class="math inline">\(\sigma\)</span> conocida</h4>
+<p>En la ecuación <a href="ic.html#eq:icmusc">(4.2)</a> se define el intervalo de confianza para la media cuando se conoce <span class="math inline">\(\sigma\)</span>. Para construir el intervalo supondremos que la desviación de los datos es la desviación poblacional. Recalcamos que esta suposición la hacemos solo para efectos prácticos.</p>
+<p>Primero cargamos los datos y seleccionamos solo los valores con los que deseamos trabajar. Usamos la función <code>filter( )</code> para seleccionar las observaciones que cumplen con la condición de que el tamaño de la empresa sea microempresa. Y luego seleccionamos solo la variable que analizaremos con la función <code>select( )</code>, en este caso solo escogemos la variable <code>ACTIVO</code>. Al finalizar la operación de filtro y selección usamos la función <code>attach( )</code>, el argumento que se escribe en la función es el nombre del conjunto de datos. La función <code>attach</code> sirve para cargar los datos a la memoria, la principal ventaja de usarla es que cuando los datos se cargan a la memoria no debemos usar el operador <code>$</code> por ejemplo en vez de escribir <code>dataframe$variable</code> ahora solo escribiremos <code>variable</code>.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">rank18com =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Ranking2018Comercio.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb70-2" title="2">                     <span class="dt">dec=</span><span class="st">&quot;,&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)</a>
+<a class="sourceLine" id="cb70-3" title="3"></a>
+<a class="sourceLine" id="cb70-4" title="4">rank18com.Micro =<span class="st"> </span>rank18com <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb70-5" title="5"><span class="st">  </span><span class="kw">filter</span>(TAMA <span class="op">==</span><span class="st"> &quot;MICROEMPRESA&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb70-6" title="6"><span class="st">  </span><span class="kw">select</span>(ACTIVO)</a>
+<a class="sourceLine" id="cb70-7" title="7"></a>
+<a class="sourceLine" id="cb70-8" title="8"><span class="kw">attach</span>(rank18com.Micro)</a></code></pre></div>
+<p>Calculamos la media y la desviación de los activos de las microempresas.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">media =<span class="st"> </span><span class="kw">mean</span>(ACTIVO)</a>
+<a class="sourceLine" id="cb71-2" title="2">desviacion =<span class="st"> </span><span class="kw">sd</span>(ACTIVO)</a></code></pre></div>
+<p>Calculamos el término <span class="math inline">\(Z_{\frac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}}\)</span> para obtener el término <span class="math inline">\(Z_{\frac{\alpha}{2}}\)</span> trabajamos con la función <code>qnorm</code> el argumento que escribimos en la función es el valor <span class="math inline">\(1-\frac{\alpha}{2}\)</span>, si el intervalo es con el <span class="math inline">\(95\%\)</span> de confianza <span class="math inline">\(\alpha=0.05\)</span> por lo que el valor a ser escrito en la función es <span class="math inline">\(1-\frac{0.05}{2}=0.975\)</span>. Para calcular <span class="math inline">\(\sqrt{n}\)</span> primero determinamos <span class="math inline">\(n\)</span> con la función <code>nrow()</code> el argumento que recibe esta función es el conjunto de datos. Para calcular la raíz utilizamos la función <code>sqrt( )</code>.</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">error  =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.975</span>)<span class="op">*</span>desviacion<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">nrow</span>(rank18com.Micro))</a></code></pre></div>
+<p>Luego, calculamos los extremos del intervalo:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"></a>
+<a class="sourceLine" id="cb73-2" title="2">menor =<span class="st"> </span>media <span class="op">-</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb73-3" title="3">mayor =<span class="st"> </span>media <span class="op">+</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb73-4" title="4">menor</a>
+<a class="sourceLine" id="cb73-5" title="5"><span class="co">## [1] 198886.2</span></a>
+<a class="sourceLine" id="cb73-6" title="6">mayor</a>
+<a class="sourceLine" id="cb73-7" title="7"><span class="co">## [1] 492255.3</span></a></code></pre></div>
+<p>El intervalo con el <span class="math inline">\(95\%\)</span> de confianza para la media es <span class="math inline">\(\left( 198886.20, 492255.30 \right)\)</span>. Si quisieramos calcular el intervalo con el <span class="math inline">\(98\%\)</span> de confianza cambiamos el argumento en la función <code>qnorm()</code> de <span class="math inline">\(0.975\)</span> a <span class="math inline">\(0.99\)</span>.</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"></a>
+<a class="sourceLine" id="cb74-2" title="2">error  =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.99</span>)<span class="op">*</span>desviacion<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">nrow</span>(rank18com.Micro))</a>
+<a class="sourceLine" id="cb74-3" title="3">menor =<span class="st"> </span>media <span class="op">-</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb74-4" title="4">mayor =<span class="st"> </span>media <span class="op">+</span><span class="st"> </span>error</a>
+<a class="sourceLine" id="cb74-5" title="5">menor</a>
+<a class="sourceLine" id="cb74-6" title="6"><span class="co">## [1] 171465.8</span></a>
+<a class="sourceLine" id="cb74-7" title="7">mayor</a>
+<a class="sourceLine" id="cb74-8" title="8"><span class="co">## [1] 519675.7</span></a></code></pre></div>
+<p>El intervalo con el <span class="math inline">\(98\%\)</span> de confianza para la media es <span class="math inline">\(\left( 171465.80, 519675.70 \right)\)</span>.</p>
+<p>Otra opción si no se desea programar todos los pasos es usar la función <code>z.test</code> del paquete <code>BSDA</code> en la función <code>z.test()</code> se debe indicar el valor de <span class="math inline">\(\sigma\)</span> en este caso, como antes, asumiremos que <span class="math inline">\(\sigma\)</span> es la desviación de los activos obtenida con anterioridad. Ya que solo nos interesa calcular el intervalo de confianza usaremos <code>z.test()$conf.int</code> que nos dará el intervalo con un <span class="math inline">\(95\%\)</span> de confianza:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw">library</span>(BSDA)</a>
+<a class="sourceLine" id="cb75-2" title="2"><span class="co">## Loading required package: lattice</span></a>
+<a class="sourceLine" id="cb75-3" title="3"><span class="co">## </span></a>
+<a class="sourceLine" id="cb75-4" title="4"><span class="co">## Attaching package: &#39;BSDA&#39;</span></a>
+<a class="sourceLine" id="cb75-5" title="5"><span class="co">## The following object is masked from &#39;package:datasets&#39;:</span></a>
+<a class="sourceLine" id="cb75-6" title="6"><span class="co">## </span></a>
+<a class="sourceLine" id="cb75-7" title="7"><span class="co">##     Orange</span></a>
+<a class="sourceLine" id="cb75-8" title="8"><span class="kw">z.test</span>(ACTIVO,<span class="dt">sigma.x =</span> desviacion)<span class="op">$</span>conf.int</a>
+<a class="sourceLine" id="cb75-9" title="9"><span class="co">## [1] 198886.2 492255.3</span></a>
+<a class="sourceLine" id="cb75-10" title="10"><span class="co">## attr(,&quot;conf.level&quot;)</span></a>
+<a class="sourceLine" id="cb75-11" title="11"><span class="co">## [1] 0.95</span></a></code></pre></div>
+<p>Si deseamos calcular el intervalo con un nivel de confianza diferente al <span class="math inline">\(95\%\)</span>, por ejemplo el <span class="math inline">\(98\%\)</span>, indicamos la opción <code>conf.level=0.98</code></p>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="kw">z.test</span>(ACTIVO,<span class="dt">sigma.x =</span> desviacion, <span class="dt">conf.level =</span> <span class="fl">0.98</span>)<span class="op">$</span>conf.int</a>
+<a class="sourceLine" id="cb76-2" title="2"><span class="co">## [1] 171465.8 519675.7</span></a>
+<a class="sourceLine" id="cb76-3" title="3"><span class="co">## attr(,&quot;conf.level&quot;)</span></a>
+<a class="sourceLine" id="cb76-4" title="4"><span class="co">## [1] 0.98</span></a></code></pre></div>
+</div>
+<div id="musd" class="section level4">
+<h4><span class="header-section-number">4.3.1.2</span> <span class="math inline">\(\sigma\)</span> desconocida</h4>
+<p>La función <code>t.test()</code> se utiliza para realizar pruebas de hipótesis, entre sus salidas o resultados se encuenta un intervalo de confianza, debido a que solo nos interesa calcular intervalos de confianza utilizaremos la instrucción <code>t.test()$conf.int</code> que nos dará directamente el intervalo con un <span class="math inline">\(95\%\)</span> de confianza:</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"></a>
+<a class="sourceLine" id="cb77-2" title="2"><span class="kw">t.test</span>(ACTIVO)<span class="op">$</span>conf.int</a>
+<a class="sourceLine" id="cb77-3" title="3"><span class="co">## [1] 198534.5 492607.0</span></a>
+<a class="sourceLine" id="cb77-4" title="4"><span class="co">## attr(,&quot;conf.level&quot;)</span></a>
+<a class="sourceLine" id="cb77-5" title="5"><span class="co">## [1] 0.95</span></a></code></pre></div>
+<p>Si deseamos calcular el intervalo con otro nivel de confianza, por ejemplo el <span class="math inline">\(90\%\)</span>, agregamos dentro de la función <code>t.test()</code> la opción <code>conf.level = 0.90</code></p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"></a>
+<a class="sourceLine" id="cb78-2" title="2"><span class="kw">t.test</span>(ACTIVO, <span class="dt">conf.level =</span> <span class="fl">0.90</span> )<span class="op">$</span>conf.int</a>
+<a class="sourceLine" id="cb78-3" title="3"><span class="co">## [1] 222243.4 468898.1</span></a>
+<a class="sourceLine" id="cb78-4" title="4"><span class="co">## attr(,&quot;conf.level&quot;)</span></a>
+<a class="sourceLine" id="cb78-5" title="5"><span class="co">## [1] 0.9</span></a></code></pre></div>
+<p>Para terminar esta sección liberamos la memoria de los datos <code>rank18com.Micro</code> para esto usamos la función <code>detach</code></p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="kw">detach</span>(rank18com.Micro)</a></code></pre></div>
+</div>
+</div>
+<div id="para-la-proporcion" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> Para la proporción</h3>
+<p>Para estimar intervalos de confianza para la proporción se utiliza la función <code>prop.test(x, n, conf.level = 0.95, correct = TRUE)$conf.int</code>. En <code>x</code> se escribe el número de éxitos y en <code>n</code> el número de intentos.</p>
+<p>Supongamoos que deseamos calcular un intervalo de confianza para la proporción de empresas grandes de la base de datos <code>Ranking2018Comercio.csv</code>.</p>
+<p>Primero cargamos los datos y determinamos el número de empresas en total dentro de la base de datos con el comando <code>nrow()</code>, mientras que para contar el número de empresas que son grandes usamos también el comando <code>nrow()</code> pero lo aplicamos a un subconjunto de los datos este subconjunto lo construimos con <code>rank18com[which(rank18com$TAMAÑO=='GRANDE', )]</code>. Nótese que dentro del nombre del conjunto de datos ponemos la condición de que el tamaño sea <code>"GRANDE"</code>. El lector puede notar que esta vez hemos usado algo diferente al paquete <code>dplyr</code>, las funciones usadas pertenecen a la base de R. Queda para el lector la tarea de investigar cómo hacerlo con el paquete <code>dplyr</code>.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">rank18com =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Ranking2018Comercio.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb80-2" title="2">                     <span class="dt">dec=</span><span class="st">&quot;,&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)</a>
+<a class="sourceLine" id="cb80-3" title="3"></a>
+<a class="sourceLine" id="cb80-4" title="4">x =<span class="st"> </span><span class="kw">nrow</span>(rank18com[<span class="kw">which</span>(rank18com<span class="op">$</span>TAMA <span class="op">==</span><span class="st"> &quot;GRANDE&quot;</span>), ])</a>
+<a class="sourceLine" id="cb80-5" title="5">n =<span class="st"> </span><span class="kw">nrow</span>(rank18com)</a></code></pre></div>
+<p>Para construir un intervalo de confianza para la proporción se utiliza la función <code>prop.test()</code>, esta función utiliza los argumentos básicos <code>prop.test(x,n,conf.level=0.95)$conf.int</code>, <code>x</code> y <code>n</code> están definidos como anteriormente lo hacíamos para la proporción.</p>
+<p>Construyendo el intervalo de confianza con el 95% de confianza para la proporción de empresas grandes se obtiene</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">prop.test</span>(x,n)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 0.01144951 0.03967269
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<p>Se interpreta que con un <span class="math inline">\(95\%\)</span> de confianza la proporción de empresas grandes dedicadas al comercio se encuentra en el intervalo <span class="math inline">\(\left(0.0114, 0.0396 \right)\)</span></p>
+</div>
+<div id="diferencia-de-medias" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> Diferencia de medias</h3>
+<div id="sigma_1-y-sigma_2-conocidas" class="section level4">
+<h4><span class="header-section-number">4.3.3.1</span> <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span> conocidas</h4>
+<p>Para esta sección necesitamos dos grupos el grupo 1 serán las pequeñas empresas y el grupo 2 las microempresas,</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">rank18com.Peq =<span class="st"> </span>rank18com <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb83-2" title="2"><span class="st">  </span><span class="kw">filter</span>(TAMA <span class="op">==</span><span class="st"> &quot;PEQUEÑA&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb83-3" title="3"><span class="st">  </span><span class="kw">select</span>(ACTIVO)</a>
+<a class="sourceLine" id="cb83-4" title="4">act.Peq =<span class="st"> </span>rank18com.Peq<span class="op">$</span>ACTIVO</a>
+<a class="sourceLine" id="cb83-5" title="5"></a>
+<a class="sourceLine" id="cb83-6" title="6">rank18com.Micro =<span class="st"> </span>rank18com <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb83-7" title="7"><span class="st">  </span><span class="kw">filter</span>(TAMA <span class="op">==</span><span class="st"> &quot;MICROEMPRESA&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb83-8" title="8"><span class="st">  </span><span class="kw">select</span>(ACTIVO)</a>
+<a class="sourceLine" id="cb83-9" title="9">act.Micro =<span class="st"> </span>rank18com.Micro<span class="op">$</span>ACTIVO</a></code></pre></div>
+<p>Elaboramos el intervalo de confianza para la diferencia de medias de los dos grupos <span class="math inline">\(\mu_1-\mu_2\)</span>. Esto lo hacemos con la función <code>z.test</code> del paquete <code>BSDA</code>. En la sección <a href="intervalos-de-confianza-en-r.html#musc">4.3.1.1</a> utilizamos la función para elaborar el intervalo de confianza. En extenso esta función se usa de la siguiente forma <code>z.test(x, y = NULL, alternative = "two.sided", mu = 0, sigma.x = NULL,   sigma.y = NULL, conf.level = 0.95)</code> Como podemos ver por defecto el programa calcula el intervalo de confianza con un <span class="math inline">\(95\%\)</span> de confianza. Además debemos indicar los valores de <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span> y al igual que en la seccion <a href="intervalos-de-confianza-en-r.html#musc">4.3.1.1</a> supondremos que la desviación muestral es la desviación poblacional. Calculamos el intervalo de confianza para la diferencia de medias con el <span class="math inline">\(95\)</span>% de confianza.</p>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1"><span class="kw">library</span>(BSDA)</a>
+<a class="sourceLine" id="cb84-2" title="2"><span class="kw">z.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">sigma.x =</span> <span class="kw">sd</span>(act.Peq), </a>
+<a class="sourceLine" id="cb84-3" title="3">       <span class="dt">y=</span>act.Micro, <span class="dt">sigma.y =</span> <span class="kw">sd</span>(act.Micro))<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 122739.5 204426.1
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<p>Modificamos el parámetro de la confianza y trabajamos con un nivel de <span class="math inline">\(90\%\)</span> de confianza.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1"><span class="kw">library</span>(BSDA)</a>
+<a class="sourceLine" id="cb86-2" title="2"><span class="kw">z.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">sigma.x =</span> <span class="kw">sd</span>(act.Peq), </a>
+<a class="sourceLine" id="cb86-3" title="3">       <span class="dt">y=</span>act.Micro, <span class="dt">sigma.y =</span> <span class="kw">sd</span>(act.Micro), </a>
+<a class="sourceLine" id="cb86-4" title="4">       <span class="dt">conf.level =</span> <span class="fl">0.90</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 129306.0 197859.5
+## attr(,&quot;conf.level&quot;)
+## [1] 0.9</code></pre>
+</div>
+<div id="icddd" class="section level4">
+<h4><span class="header-section-number">4.3.3.2</span> Desviaciones desconocidas y diferentes</h4>
+<p>Para esta sección y la siguiente trabajamos con las mismas variables de la sección anterior. Como en la sección <a href="intervalos-de-confianza-en-r.html#musd">4.3.1.2</a> usamos la función <code>t.test</code> el uso de esta función es <code>t.test(x, y = NULL,alternative = c("two.sided", "less", "greater"),mu = 0, paired = FALSE, var.equal = FALSE,conf.level = 0.95, ...)</code> La función por defecto calcula el intervalo con el <span class="math inline">\(95\)</span>% de confianza y se asume que las desviaciones son diferentes.</p>
+<p>Trabajamos con un intervalo de confianza al <span class="math inline">\(95\)</span>% para la diferencia de medias con desviaciones desconocidas y diferentes. Aunque por defecto la función asume que las desviaciones son diferentes incluimos la opción <code>var.equal = FALSE</code>.</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb88-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.95</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 122396.1 204769.5
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<p>Si calculamos el intervalo con el <span class="math inline">\(98\)</span>% de confianza.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb90-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.98</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 114563.4 212602.2
+## attr(,&quot;conf.level&quot;)
+## [1] 0.98</code></pre>
+</div>
+<div id="desviaciones-desconocidas-e-iguales-1" class="section level4">
+<h4><span class="header-section-number">4.3.3.3</span> Desviaciones desconocidas e iguales</h4>
+<p>Cuando se asumen desviaciones iguales se usa la opción <code>var.equal = TRUE</code>. El intervalo de confianza con el <span class="math inline">\(95\)</span>% se calcula de la siguiente forma:</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb92-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.95</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 134354.2 192811.4
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<p>Mientras que el intervalo con el <span class="math inline">\(98\)</span>% seria:</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb94-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.98</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 128861.3 198304.2
+## attr(,&quot;conf.level&quot;)
+## [1] 0.98</code></pre>
+</div>
+</div>
+<div id="diferencia-de-proporciones" class="section level3">
+<h3><span class="header-section-number">4.3.4</span> Diferencia de proporciones</h3>
+<p>Para ejemplificar esto construimos el intervalo de confianza para la diferencia de proporciones de microempresas y pequeñas empresas. Se obtienen primero los valores de <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(n_1\)</span>y <span class="math inline">\(n_2\)</span>, en este caso como trabajaremos con los datos de la base <code>Ranking2018Comercio.csv</code> los valores de <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span> son iguales</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">n =<span class="st"> </span><span class="kw">nrow</span>(rank18com)</a>
+<a class="sourceLine" id="cb96-2" title="2">x1 =<span class="st"> </span><span class="kw">length</span>(act.Micro)</a>
+<a class="sourceLine" id="cb96-3" title="3">x2 =<span class="st"> </span><span class="kw">length</span>(act.Peq)</a></code></pre></div>
+<p>Construimos el intervalo para la diferencia de las proporciones con un 95% de confianza.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1"><span class="kw">prop.test</span>(<span class="kw">c</span>(x1,x2),<span class="kw">c</span>(n,n))<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 0.3604243 0.4758676
+## attr(,&quot;conf.level&quot;)
+## [1] 0.95</code></pre>
+<p>Construimos el intervalo para la diferencia de las proporciones con un 99% de confianza.</p>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="kw">prop.test</span>(<span class="kw">c</span>(x1,x2),<span class="kw">c</span>(n,n), <span class="dt">conf.level =</span> <span class="fl">0.99</span>)<span class="op">$</span>conf.int</a></code></pre></div>
+<pre><code>## [1] 0.3429067 0.4933852
+## attr(,&quot;conf.level&quot;)
+## [1] 0.99</code></pre>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="ph.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="pruebas-de-hipotesis-en-r.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

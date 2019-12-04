@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.5 Distribución normal y \(t\) de Student en R | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.5 Distribución normal y \(t\) de Student en R | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.5 Distribución normal y \(t\) de Student en R | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="distribucion-t-de-student.html">
+<link rel="next" href="icph.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="distribucion-normal-y-t-de-student-en-r" class="section level2">
+<h2><span class="header-section-number">3.5</span> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</h2>
+<p>Todas las distribuciones que se manejan en R tienen cuatro funciones. Existe un nombre base, por ejemplo para la normal el nombre base es <code>norm</code>. La base es antecedida por cualquiera de las siguientes cuatro letras.</p>
+<ul>
+<li><code>p</code> por <em>probabilidad</em>, en referencia a la función de distribución acumulada</li>
+<li><code>q</code> por <em>cuantil</em>, en este caso se refiere a la función de distribución acumulada inversa. Dado un valor de probabilidad nos devuelve el valor de la distribución que acumula esa probabilidad.</li>
+<li><code>d</code> por <em>densidad</em>.</li>
+<li><code>r</code> por <em>aleatorio</em>, una variable aleatoria con la distribución especificada.</li>
+</ul>
+<p>Para el caso de la distribución normal y la distribución <span class="math inline">\(t\)</span> de Student entonces las funciones son:</p>
+<ul>
+<li><code>pnorm</code>, <code>qnorm</code>, <code>dnorm</code> y <code>rnorm</code></li>
+<li><code>pt</code>, <code>qt</code>, <code>dt</code>, <code>rt</code></li>
+</ul>
+<div id="ejemplos" class="section level3">
+<h3><span class="header-section-number">3.5.1</span> Ejemplos</h3>
+<p>El cálculo de probabilidades con la distribución normal se hace con la función <code>pnorm</code>. La función <code>pnorm</code> se utiliza de la siguiente forma <code>pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)</code> las opciones que van dentro de la función son:</p>
+<ul>
+<li><code>q</code>: que es el valor para el cual se quiere determinar la probabilidad.</li>
+<li><code>mean</code>: es el valor de la media de la distribución, el valor por defecto es <span class="math inline">\(0\)</span> que corresponde a la media de la distribución normal estándar.</li>
+<li><code>sd</code>: es el valor de la desviación de la distribución, el valor por defecto es <span class="math inline">\(1\)</span> que corresponde a la desviación de la distribución normal estándar.</li>
+<li><code>lower.tail</code>: se puede indicar “TRUE” o “FALSE”, si es verdadero (“TRUE”) se determina <span class="math inline">\(P\left(X \leq q \right)\)</span> y si es falso (“FALSE”) se determina <span class="math inline">\(P\left( X &gt; q \right)\)</span></li>
+<li><code>log.p</code>: si es verdadero las probabilidades se dan en logaritmos.</li>
+</ul>
+<p>En la sección <a href="distribucion-de-probabilidad-normal.html#dne">3.3.1</a> se puso un ejemplo sobre el tiempo de llenado de una declaración del impuesto a la renta. Recordemos que se partía de la suposición que el tiempo de llenado de la declaración del impuesto a la renta sigue una distribución normal con media <span class="math inline">\(80\)</span> y desviación <span class="math inline">\(20\)</span> minutos. y se quería calcular la probabilidad de que el llenado de una declaración se dé entre 50 y 90 minutos, en terminos matemáticos deseamos calcular <span class="math inline">\(P\left( 50 \leq X \leq 90 \right)\)</span>. El cálculo de la probabilidad se muestra a continuación.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">pnorm</span>(<span class="dv">90</span>,<span class="dt">mean=</span><span class="dv">80</span>,<span class="dt">sd=</span><span class="dv">20</span>)<span class="op">-</span><span class="kw">pnorm</span>(<span class="dv">50</span>,<span class="dt">mean=</span><span class="dv">80</span>,<span class="dt">sd=</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>## [1] 0.6246553</code></pre>
+<p>No hemos incluido las opciones <code>lower.tail</code> o <code>log.p</code> ya que son opciones en las que estamos usando los valores que por defecto tiene la función configurada. Si deseamos calcular la probabilidad que el tiempo de llenado de la declaración sea más de 100 minutos, para esto debemos indicar la opción <code>lower.tail = FALSE</code>.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">pnorm</span>(<span class="dv">100</span>,<span class="dt">mean=</span><span class="dv">80</span>,<span class="dt">sd=</span><span class="dv">20</span>, <span class="dt">lower.tail =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 0.1586553</code></pre>
+<p>Supongamos que se quieren simular 100 valores que siguen la distribución normal con media <span class="math inline">\(80\)</span> y desviación <span class="math inline">\(20\)</span>, utilizamos entonces la función <code>rnorm</code>, esta función se usa de la siguiente forma <code>rnorm(n, mean = 0, sd = 1)</code></p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean =</span> <span class="dv">80</span>, <span class="dt">sd=</span><span class="dv">20</span>)</a></code></pre></div>
+<pre><code>##   [1]  96.90650  91.70470  48.38908  78.25833  93.19107  86.17031  44.92552
+##   [8] 102.49437  86.00999  66.77723  97.76303  83.24026  96.94491  78.31559
+##  [15]  79.15153 137.56867  73.61797  68.08222  64.43655  61.01597 101.99068
+##  [22]  74.36169  79.28236  63.86728  39.85579 108.30676  91.43500  79.55348
+##  [29]  89.64134  35.71574  74.54590  59.44168  66.18822 133.12314  94.93192
+##  [36]  70.81254  61.95903 118.78675  70.72391  85.65417 138.52486  78.59500
+##  [43]  98.18034  94.39235  83.11287  87.27302  58.85834  61.44340  49.89612
+##  [50]  63.86168  50.60345  79.22571  96.48099  58.90545  76.10500 103.03040
+##  [57] 114.59757  67.87587  81.61768  88.05533 110.61206  59.79329  98.58785
+##  [64]  68.87155  86.79186  82.13591  75.13162 100.90562  83.58226  91.68849
+##  [71]  74.28390  85.42170 125.18742  74.37332  97.02755  73.91017  92.78030
+##  [78]  68.03433  88.99029  71.82620  69.11039  81.65543  49.27907  71.03866
+##  [85] 110.06544 102.39460  65.85174  97.19025  60.91855  67.31960  79.64637
+##  [92] 100.69595  66.80511 108.74819  91.67119  64.35538  36.74554  50.58071
+##  [99]  64.02100 124.83200</code></pre>
+<p>Si queremos simular valores de una distribución <span class="math inline">\(t\)</span> de Student utilizamos la función <code>rt</code>, que recibe los parámetros <code>rt(n, df, ncp)</code>. El parámetro <code>ncp</code> es la no centralidad. La distribución <span class="math inline">\(t\)</span> que hemos revisado tiene su parámetro de no centralidad igual a <span class="math inline">\(0\)</span>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">rt</span>(<span class="dv">100</span>, <span class="dt">df =</span> <span class="dv">19</span>)</a></code></pre></div>
+<pre><code>##   [1] -1.43502479  0.01649905  0.75241395 -1.47630482 -0.27252671
+##   [6]  0.94599069 -0.62419282  2.35791378  0.18049186  0.35538043
+##  [11] -0.21591571  0.36492461  0.88933722  0.67144581  0.52055193
+##  [16] -1.39720868  0.96479495 -0.68584533 -1.08170751 -1.84719335
+##  [21] -0.44872968  0.53158847 -1.35519072  1.26365346 -0.20670867
+##  [26] -0.86369749  0.89683097 -0.99326768  0.93663053 -0.37363608
+##  [31] -2.10359624 -0.55399097 -0.56149163 -1.20681193 -1.10127176
+##  [36]  2.39371313 -1.94676586 -0.02299056 -0.94347486  1.44537603
+##  [41]  0.93836469 -0.13274894  0.72565361 -1.23276138 -0.82555587
+##  [46]  0.36041212 -0.92586696 -1.47064571 -0.84353484  0.83712660
+##  [51] -0.41132502 -0.54808517 -2.10388732 -1.51511131 -0.88707118
+##  [56] -0.35488132  0.38087621  0.84571053  1.42395100 -0.35567553
+##  [61] -0.23719689  2.33086201 -1.45949613  1.87394732  0.27046995
+##  [66] -1.34771741 -0.32855761 -1.01413746  1.12136836  0.53932029
+##  [71] -0.74708242  0.40617401 -0.61586943 -0.51229635  2.14862551
+##  [76]  0.99614797  0.08781096 -0.13851370  0.11512163  0.79836591
+##  [81] -0.50740940 -1.35983853 -0.16866775 -0.02518583 -1.97132132
+##  [86] -1.37542267  0.20450159  0.41768824 -0.48347459 -1.23716391
+##  [91] -1.14339416  0.49814724  1.11407856 -1.46547336 -0.50391424
+##  [96]  0.23086346  0.38224237 -0.50326102  0.42582818  0.55020429</code></pre>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="distribucion-t-de-student.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="icph.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

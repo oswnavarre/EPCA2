@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.4 Pruebas de Hipótesis en R | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.4 Pruebas de Hipótesis en R | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.4 Pruebas de Hipótesis en R | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="intervalos-de-confianza-en-r.html">
+<link rel="next" href="ejercicios-1.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pruebas-de-hipotesis-en-r" class="section level2">
+<h2><span class="header-section-number">4.4</span> Pruebas de Hipótesis en R</h2>
+<div id="para-la-media-1" class="section level3">
+<h3><span class="header-section-number">4.4.1</span> Para la media</h3>
+<p>En este caso usamos la función <code>z.test()</code> o <code>t.test()</code> dependiendo si la o las desviaciones son conocidas o desconocidas respectivamente.</p>
+<div id="sigma-conocida" class="section level4">
+<h4><span class="header-section-number">4.4.1.1</span> <span class="math inline">\(\sigma\)</span> conocida</h4>
+<p>El uso de la función <code>z.test</code> es <code>z.test(x, y = NULL,alternative = "two.sided", mu = 0, sigma.x = NULL,sigma.y = NULL, conf.level = 0.95)</code> para pruebas de hipótesis de una sola variable solo ingresamos la variable a ser analizada en <code>x</code>, para indicar la hipótesis alternativa en la opción <code>alternative</code> podemos escribir <code>"greater"</code>para mayor, <code>"less"</code> para menor o <code>"two.sided"</code> para diferente. Como antes debemos indicar el valor de la desviación conocida que asumiremos también que es la desviación de la muestra.
+Para indicar el valor hipotético de la media reemplazamos en la opción <code>mu=0</code> el valor de <span class="math inline">\(0\)</span> por el valor hipotético.</p>
+<p>Para ejemplificar el uso de la función, supongamos que queremos verificar si la media del valor de los activos de las microempresas dedicadas al comercio es diferente de <span class="math inline">\(40\;000\)</span>, con una significancia del <span class="math inline">\(5\%\)</span>, cuando hacemos la prueba de hipótesis debemos indicar la confianza que es el complemento de la significancia <span class="math inline">\(\text{Confianza}=1- \text{Significancia} \rightarrow \text{Significancia}=1-\text{Confianza}\)</span>.</p>
+<p>La hipótesis nula y alternativa serían:</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu = 40\;000 \\ 
+H_1: \mu \neq 40\;000
+\end{cases} 
+\end{equation}\]</span></p>
+<p>La instrucción en R para hacer la prueba de hipótesis sería:</p>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1">desviacion =<span class="st"> </span><span class="kw">sd</span>(act.Micro)</a>
+<a class="sourceLine" id="cb101-2" title="2"><span class="kw">z.test</span>(act.Micro, <span class="dt">mu =</span> <span class="dv">40000</span>, <span class="dt">sigma.x =</span> desviacion, <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  One-sample z-Test
+## 
+## data:  act.Micro
+## z = -0.21804, p-value = 0.8274
+## alternative hypothesis: true mean is not equal to 40000
+## 95 percent confidence interval:
+##  29074.58 48737.94
+## sample estimates:
+## mean of x 
+##  38906.26</code></pre>
+<p>En este caso el valor <span class="math inline">\(p\)</span> (<code>p-value</code>) es igual a <span class="math inline">\(0.8274\)</span> y recordemos que en la sección <a href="ph.html#pvalor">4.2.2</a> se definió el criterio del valor <span class="math inline">\(p\)</span> que consiste en rechazar <span class="math inline">\(H_0\)</span> cuando <span class="math inline">\(p &lt; \alpha\)</span>. En este caso se acepta la hipótesis nula de que el valor real de la media es igual a <span class="math inline">\(40\;000\)</span>.</p>
+<p>Supongamos que se desea probar que el valor real de la media es menor a <span class="math inline">\(40\;000\)</span>, para hacer esto incluimos la opción <code>alternative ="less"</code>.</p>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="kw">z.test</span>(act.Micro, <span class="dt">mu =</span> <span class="dv">40000</span>, <span class="dt">sigma.x =</span> desviacion,<span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>,  <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  One-sample z-Test
+## 
+## data:  act.Micro
+## z = -0.21804, p-value = 0.4137
+## alternative hypothesis: true mean is less than 40000
+## 95 percent confidence interval:
+##        NA 47157.26
+## sample estimates:
+## mean of x 
+##  38906.26</code></pre>
+<p>Las conclusiones son parecidas a la primera prueba de hipótesis realizada. Para finalizar liberamos la memoria del conjunto de datos.</p>
+</div>
+<div id="sigma-desconocida" class="section level4">
+<h4><span class="header-section-number">4.4.1.2</span> <span class="math inline">\(\sigma\)</span> desconocida</h4>
+<p>Cuando se desconoce el valor de <span class="math inline">\(\sigma\)</span> se utiliza la función <code>t.test( )</code> que se asemeja a la función <code>z.test( )</code> con la diferencia que no se debe proporcionar el valor teórico de <span class="math inline">\(\sigma\)</span>.</p>
+<p>Para comprender el uso de esta función para realizar pruebas de hipótesis trabajaremos con los activos de empresas pequeñas. Estamos interesados en conocer si el valor promedio de los activos de las empresas pequeñas es mayor a <span class="math inline">\(250\;000\)</span>. Las hipótesis nula y alternativa se muestran a continuación.</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu \leq 250\;000 \\ 
+H_1: \mu &gt; 250\;000
+\end{cases} 
+\end{equation}\]</span></p>
+<p>Realizamos la prueba de hipótesis con una significancia (<span class="math inline">\(\alpha\)</span>) del <span class="math inline">\(5\%\)</span> o una confianza del <span class="math inline">\(95\%\)</span>:</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="kw">t.test</span>(act.Peq, <span class="dt">mu =</span> <span class="dv">250000</span>,<span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>,  <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  act.Peq
+## t = -2.349, df = 129, p-value = 0.9898
+## alternative hypothesis: true mean is greater than 250000
+## 95 percent confidence interval:
+##  168979.5      Inf
+## sample estimates:
+## mean of x 
+##    202489</code></pre>
+<p>De acuerdo a los resultados obtenidos, el valor <span class="math inline">\(p\)</span> nos sugiere no rechazar la hipótesis nula, se concluye entonces que la media poblacional de los activos de las empresas pequeñas es menor o igual a <span class="math inline">\(250\;000\)</span></p>
+</div>
+</div>
+<div id="para-la-proporcion-1" class="section level3">
+<h3><span class="header-section-number">4.4.2</span> Para la proporción</h3>
+<p>Supongamos que se quiere probar que más de la mitad de las compañías son microempresas. En términos matemáticos se afirma que la proporción de compañías catalogadas como microempresas es mayor a <span class="math inline">\(0.50\)</span>. Las hipótesis nula y alternativa serían:</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \pi \leq 0.50 \\ 
+H_1: \pi &gt; 0.50
+\end{cases} 
+\end{equation}\]</span></p>
+<p>Para realizar pruebas de hipótesis para la proporción utilizamos la función <code>prop.test()</code>, con respecto a los intervalos de confianza agregamos las opciones:</p>
+<ul>
+<li><code>p = NULL</code> donde indicamos el valor de la proporción hipotética y</li>
+<li><code>alternative = c("two.sided", "less", "greater")</code> para señalar la hipotésis alternativa.</li>
+</ul>
+<p>La prueba de hipótesis con una significancia del <span class="math inline">\(5\%\)</span> o con una confianza del <span class="math inline">\(95\)</span>%, en <code>n</code> almacenamos el total de datos y en <code>x1</code> el total de microempresas:</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">n =<span class="st"> </span><span class="kw">nrow</span>(rank18com)</a>
+<a class="sourceLine" id="cb107-2" title="2">x1 =<span class="st"> </span><span class="kw">length</span>(act.Micro)</a>
+<a class="sourceLine" id="cb107-3" title="3"><span class="kw">prop.test</span>(x1, n, <span class="dt">p =</span> <span class="fl">0.50</span>, <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>,  <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  1-sample proportions test with continuity correction
+## 
+## data:  x1 out of n, null probability 0.5
+## X-squared = 61.097, df = 1, p-value = 2.717e-15
+## alternative hypothesis: true p is greater than 0.5
+## 95 percent confidence interval:
+##  0.6384734 1.0000000
+## sample estimates:
+##         p 
+## 0.6745562</code></pre>
+<p>De acuerdo al valor <span class="math inline">\(p\)</span> obtenido se concluye que hay suficiente evidencia estadística para rechazar la hipótesis nula, y se infiere que más de la mitad de las compañías es catalogada como microempresa.</p>
+<p>Imaginemos que deseamos probar la hipótesis de que el porcentaje de empresas catalogadas como pequeñas es menor al 25%, esta hipótesis se desea probar con una significancia del 2%. Las hipótesis nula y alternativa serían ahora.</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \pi \geq 0.25 \\ 
+H_1: \pi &lt; 0.25
+\end{cases} 
+\end{equation}\]</span></p>
+<p>Para realizar la prueba de hipótesis en R, en la opción <code>alternative</code> sería <code>"less"</code> y <code>p</code> debemos configurarlo como <code>p=0.25</code> el nivel de confianza sería 98%</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1">n =<span class="st"> </span><span class="kw">nrow</span>(rank18com)</a>
+<a class="sourceLine" id="cb109-2" title="2">x2 =<span class="st"> </span><span class="kw">length</span>(act.Peq)</a>
+<a class="sourceLine" id="cb109-3" title="3"><span class="kw">prop.test</span>(x2, n, <span class="dt">p =</span> <span class="fl">0.25</span>, <span class="dt">alternative =</span> <span class="st">&quot;less&quot;</span>,  <span class="dt">conf.level =</span> <span class="fl">0.98</span>)</a></code></pre></div>
+<pre><code>## 
+##  1-sample proportions test with continuity correction
+## 
+## data:  x2 out of n, null probability 0.25
+## X-squared = 0.079553, df = 1, p-value = 0.611
+## alternative hypothesis: true p is less than 0.25
+## 98 percent confidence interval:
+##  0.0000000 0.2991607
+## sample estimates:
+##         p 
+## 0.2564103</code></pre>
+<p>De acuerdo al valor <span class="math inline">\(p\)</span> obtenido se concluye que hay suficiente evidencia estadística para no rechazar la hipótesis nula dicho de otra forma la proporción de compañías catalogadas como pequeñas es mayor o igual a <span class="math inline">\(0.25\)</span></p>
+</div>
+<div id="para-la-diferencia-de-medias" class="section level3">
+<h3><span class="header-section-number">4.4.3</span> Para la diferencia de medias</h3>
+<div id="sigma_1-y-sigma_2-conocidas-1" class="section level4">
+<h4><span class="header-section-number">4.4.3.1</span> <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span> conocidas</h4>
+<p>Supongamos que se desea probar que el promedio de los activos de las empresas pequeñas es mayor que el promedio de los activos de las microempresas y se asume que se conocen las desviaciones poblacionales. Como ya sabemos esta prueba se realiza con la función <code>z.test( )</code>. Establecemos que las empresas pequeñas son el grupo 1 y las microempresas el grupo 2. Las hipótesis nula y alternativa serían.</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu_1 \leq \mu_2 \\ 
+H_1: \mu_1 &gt; \mu_2
+\end{cases} 
+\end{equation}\]</span></p>
+<p>Realizamos la prueba de hipótesis con un <span class="math inline">\(90\%\)</span> de confianza</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" title="1"><span class="kw">z.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">sigma.x =</span> <span class="kw">sd</span>(act.Peq), </a>
+<a class="sourceLine" id="cb111-2" title="2">       <span class="dt">y=</span>act.Micro, <span class="dt">sigma.y =</span> <span class="kw">sd</span>(act.Micro),</a>
+<a class="sourceLine" id="cb111-3" title="3">       <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>, <span class="dt">conf.level =</span> <span class="fl">0.90</span>)</a></code></pre></div>
+<pre><code>## 
+##  Two-sample z-Test
+## 
+## data:  act.Peq and act.Micro
+## z = 7.8499, p-value = 2.109e-15
+## alternative hypothesis: true difference in means is greater than 0
+## 90 percent confidence interval:
+##  136876.8       NA
+## sample estimates:
+## mean of x mean of y 
+## 202489.03  38906.26</code></pre>
+<p>Por el valor <span class="math inline">\(p\)</span> obtenido se rechaza la hipótesis nula esto implica que el promedio de los activos de las empresas pequeñas es mayor al promedio de los activos de las microempresas.</p>
+</div>
+<div id="sigma_1-y-sigma_2-desconocidas-y-diferentes" class="section level4">
+<h4><span class="header-section-number">4.4.3.2</span> <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span> desconocidas y diferentes</h4>
+<p>En este caso trabajamos con los mismos datos de la sección anterior. Se desea probar con una significancia del <span class="math inline">\(5\%\)</span> y asumiendo que las desviaciones son diferentes que las medias de los activos de las empresas pequeñas es igual al promedio de los activos de las microempresas. La hipótesis nula y alternativa en este caso serían:</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu_1 = \mu_2 \\ 
+H_1: \mu_1 \neq \mu_2
+\end{cases} 
+\end{equation}\]</span></p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb113-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  Welch Two Sample t-test
+## 
+## data:  act.Peq and act.Micro
+## t = 7.8499, df = 145.15, p-value = 8.388e-13
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  122396.1 204769.5
+## sample estimates:
+## mean of x mean of y 
+## 202489.03  38906.26</code></pre>
+<p>De acuerdo al valor <span class="math inline">\(p\)</span> obtenido se concluye que hay suficiente evidencia estadística para rechazar <span class="math inline">\(H_0\)</span>, se concluye que el promedio de los activos de las empresas pequeñas es diferente al promedio de los activos de las microempresas.</p>
+</div>
+<div id="sigma_1-y-sigma_2-desconocidas-e-iguales" class="section level4">
+<h4><span class="header-section-number">4.4.3.3</span> <span class="math inline">\(\sigma_1\)</span> y <span class="math inline">\(\sigma_2\)</span> desconocidas e iguales</h4>
+<p>A diferencia de la sección anterior se debe añadir en la función <code>t.test()</code> la opción <code>var.equal=TRUE</code>. Para ejemplificar el uso de la función con la opción indicada, la prueba de hipótesis será igual que en la sección anterior. Las hipótesis nula y alternativa son:</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu_1 = \mu_2 \\ 
+H_1: \mu_1 \neq \mu_2
+\end{cases} 
+\end{equation}\]</span></p>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="kw">t.test</span>(<span class="dt">x=</span>act.Peq, <span class="dt">y=</span>act.Micro, <span class="dt">var.equal =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb115-2" title="2">       <span class="dt">conf.level =</span> <span class="fl">0.95</span>)</a></code></pre></div>
+<pre><code>## 
+##  Two Sample t-test
+## 
+## data:  act.Peq and act.Micro
+## t = 10.998, df = 470, p-value &lt; 2.2e-16
+## alternative hypothesis: true difference in means is not equal to 0
+## 95 percent confidence interval:
+##  134354.2 192811.4
+## sample estimates:
+## mean of x mean of y 
+## 202489.03  38906.26</code></pre>
+<p>De acuerdo al valor <span class="math inline">\(p\)</span> obtenido, las conclusiones son iguales a cuando se asumen las desviaciones diferentes. Se rechaza la hipótesis nula de igualdad de los promedios de los activos de las empresas pequeñas y microempresas, hay suficiente evidencia estadística para concluir que las medias de los activos son diferentes.</p>
+</div>
+</div>
+<div id="para-la-diferencia-de-proporciones" class="section level3">
+<h3><span class="header-section-number">4.4.4</span> Para la diferencia de proporciones</h3>
+<p>Supongamos que quisieramos probar que la proporción de empresas grandes en el sector de la construcción es mayor a la proporción de empresas grandes en el sector de la manufactura. El grupo 1 será el grupo perteneciente a la construcción y el grupo 2 será el grupo correspondiente a la manufactura. Las hipótesis nula y alternativa serían.</p>
+<p><span class="math display">\[\begin{equation} 
+\begin{cases} 
+H_0: \mu_1 \leq \mu_2 \\ 
+H_1: \mu_1 &gt; \mu_2
+\end{cases} 
+\end{equation}\]</span></p>
+<p>Como primer paso cargamos los datos y contamos las empresas totales dentro de cada grupo y las que son de tamaño grande:</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1">construc =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;rankingconstruccion.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb117-2" title="2">                     <span class="dt">dec=</span><span class="st">&quot;,&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)</a>
+<a class="sourceLine" id="cb117-3" title="3"></a>
+<a class="sourceLine" id="cb117-4" title="4">manufact =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;rankingmanufactura.csv&quot;</span>,<span class="dt">header=</span><span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb117-5" title="5">                     <span class="dt">dec=</span><span class="st">&quot;,&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;;&quot;</span>)</a>
+<a class="sourceLine" id="cb117-6" title="6"></a>
+<a class="sourceLine" id="cb117-7" title="7">GRAN.CONSTRUC =<span class="st"> </span><span class="kw">nrow</span>(construc[<span class="kw">which</span>(construc<span class="op">$</span>TAMAÑO <span class="op">==</span><span class="st"> &quot;GRANDE&quot;</span>), ])</a>
+<a class="sourceLine" id="cb117-8" title="8">N.CONSTRUC =<span class="st"> </span><span class="kw">nrow</span>(construc)</a>
+<a class="sourceLine" id="cb117-9" title="9"></a>
+<a class="sourceLine" id="cb117-10" title="10">GRAN.MANUFACT =<span class="st"> </span><span class="kw">nrow</span>(manufact[<span class="kw">which</span>(manufact<span class="op">$</span>TAMAÑO <span class="op">==</span><span class="st"> &quot;GRANDE&quot;</span>), ])</a>
+<a class="sourceLine" id="cb117-11" title="11">N.MANUFACT =<span class="st"> </span><span class="kw">nrow</span>(construc)</a></code></pre></div>
+<p>Usando la función <code>prop.test( )</code> realizamos la prueba de hipótesis con una significancia del <span class="math inline">\(5\%\)</span></p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="kw">prop.test</span>(<span class="dt">x=</span><span class="kw">c</span>(GRAN.CONSTRUC,GRAN.MANUFACT),<span class="dt">n=</span><span class="kw">c</span>(N.CONSTRUC,N.MANUFACT), </a>
+<a class="sourceLine" id="cb118-2" title="2">          <span class="dt">alternative =</span> <span class="st">&quot;greater&quot;</span>)</a></code></pre></div>
+<pre><code>## 
+##  2-sample test for equality of proportions with continuity
+##  correction
+## 
+## data:  c(GRAN.CONSTRUC, GRAN.MANUFACT) out of c(N.CONSTRUC, N.MANUFACT)
+## X-squared = 197.02, df = 1, p-value = 1
+## alternative hypothesis: greater
+## 95 percent confidence interval:
+##  -0.09012631  1.00000000
+## sample estimates:
+##     prop 1     prop 2 
+## 0.03129621 0.11187777</code></pre>
+<p>De acuerdo al valor <span class="math inline">\(p\)</span> obtenido, se acepta la hipótesis nula, entonces la proporción de empresas de tamaño grande del sector construcción no es mayor que la proporción de empresas de tamaño grande del sector inmobiliario.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="intervalos-de-confianza-en-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ejercicios-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

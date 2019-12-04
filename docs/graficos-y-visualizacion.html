@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2.11 Gráficos y Visualización | Estadística para Contadores y Auditores con R</title>
+  <meta name="description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2.11 Gráficos y Visualización | Estadística para Contadores y Auditores con R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:image" content="images/cover.png" />
+  <meta property="og:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="github-repo" content="oswnavarre/AEDFR" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2.11 Gráficos y Visualización | Estadística para Contadores y Auditores con R" />
+  
+  <meta name="twitter:description" content="Libro de Estadística para Contadores y Auditores con R" />
+  <meta name="twitter:image" content="images/cover.png" />
+
+<meta name="author" content="Oswaldo Navarrete Carreño" />
+<meta name="author" content="María Alexandra Chavez P." />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="tablas-de-contingencia.html">
+<link rel="next" href="ejercicios.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Estadística para Contadores y Auditores Con R</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> ¿A quién va dirigido este libro?</a><ul>
+<li class="chapter" data-level="1.1" data-path="que-es-r.html"><a href="que-es-r.html"><i class="fa fa-check"></i><b>1.1</b> ¿Qué es R?</a></li>
+<li class="chapter" data-level="1.2" data-path="que-es-rstudio.html"><a href="que-es-rstudio.html"><i class="fa fa-check"></i><b>1.2</b> ¿Qué es Rstudio?</a></li>
+<li class="chapter" data-level="1.3" data-path="packages.html"><a href="packages.html"><i class="fa fa-check"></i><b>1.3</b> Paquetes</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>2</b> Estadística. Conceptos Básicos.</a><ul>
+<li class="chapter" data-level="2.1" data-path="estypes.html"><a href="estypes.html"><i class="fa fa-check"></i><b>2.1</b> Estadística descriptiva e inferencial</a></li>
+<li class="chapter" data-level="2.2" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html"><i class="fa fa-check"></i><b>2.2</b> Tipos de Variables</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="tipos-de-variables.html"><a href="tipos-de-variables.html#niveles-de-medicion"><i class="fa fa-check"></i><b>2.2.1</b> Niveles de medición</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="otros-conceptos-importantes.html"><a href="otros-conceptos-importantes.html"><i class="fa fa-check"></i><b>2.3</b> Otros conceptos importantes</a></li>
+<li class="chapter" data-level="2.4" data-path="tipos-de-estudio-en-investigacion.html"><a href="tipos-de-estudio-en-investigacion.html"><i class="fa fa-check"></i><b>2.4</b> Tipos de estudio en investigación</a></li>
+<li class="chapter" data-level="2.5" data-path="primerR.html"><a href="primerR.html"><i class="fa fa-check"></i><b>2.5</b> Primeros pasos en R</a></li>
+<li class="chapter" data-level="2.6" data-path="tendcentr.html"><a href="tendcentr.html"><i class="fa fa-check"></i><b>2.6</b> Medidas de Tendencia Central</a><ul>
+<li class="chapter" data-level="2.6.1" data-path="tendcentr.html"><a href="tendcentr.html#media"><i class="fa fa-check"></i><b>2.6.1</b> Media</a></li>
+<li class="chapter" data-level="2.6.2" data-path="tendcentr.html"><a href="tendcentr.html#mediana"><i class="fa fa-check"></i><b>2.6.2</b> Mediana</a></li>
+<li class="chapter" data-level="2.6.3" data-path="tendcentr.html"><a href="tendcentr.html#moda"><i class="fa fa-check"></i><b>2.6.3</b> Moda</a></li>
+<li class="chapter" data-level="2.6.4" data-path="tendcentr.html"><a href="tendcentr.html#cuando-usar-la-media-o-la-mediana"><i class="fa fa-check"></i><b>2.6.4</b> ¿Cuándo usar la media o la mediana?</a></li>
+<li class="chapter" data-level="2.6.5" data-path="tendcentr.html"><a href="tendcentr.html#calculo-de-las-medidas-de-tendencia-central-en-r"><i class="fa fa-check"></i><b>2.6.5</b> Cálculo de las medidas de tendencia central en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html"><i class="fa fa-check"></i><b>2.7</b> Medidas de posición (Cuantiles)</a><ul>
+<li class="chapter" data-level="2.7.1" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#tipos-de-cuantiles"><i class="fa fa-check"></i><b>2.7.1</b> Tipos de Cuantiles</a></li>
+<li class="chapter" data-level="2.7.2" data-path="medidas-de-posicion-cuantiles.html"><a href="medidas-de-posicion-cuantiles.html#calculo-de-cuantiles"><i class="fa fa-check"></i><b>2.7.2</b> Cálculo de cuantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="dispersion.html"><a href="dispersion.html"><i class="fa fa-check"></i><b>2.8</b> Medidas de dispersión</a><ul>
+<li class="chapter" data-level="2.8.1" data-path="dispersion.html"><a href="dispersion.html#rango"><i class="fa fa-check"></i><b>2.8.1</b> Rango</a></li>
+<li class="chapter" data-level="2.8.2" data-path="dispersion.html"><a href="dispersion.html#varianza"><i class="fa fa-check"></i><b>2.8.2</b> Varianza</a></li>
+<li class="chapter" data-level="2.8.3" data-path="dispersion.html"><a href="dispersion.html#desviacion"><i class="fa fa-check"></i><b>2.8.3</b> Desviación</a></li>
+<li class="chapter" data-level="2.8.4" data-path="dispersion.html"><a href="dispersion.html#medidas-de-dispersion-en-r"><i class="fa fa-check"></i><b>2.8.4</b> Medidas de dispersión en R</a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html"><i class="fa fa-check"></i><b>2.9</b> Tablas de frecuencia</a><ul>
+<li class="chapter" data-level="2.9.1" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cualitativas"><i class="fa fa-check"></i><b>2.9.1</b> Variables Cualitativas</a></li>
+<li class="chapter" data-level="2.9.2" data-path="tablas-de-frecuencia.html"><a href="tablas-de-frecuencia.html#variables-cuantitativas"><i class="fa fa-check"></i><b>2.9.2</b> Variables Cuantitativas</a></li>
+</ul></li>
+<li class="chapter" data-level="2.10" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html"><i class="fa fa-check"></i><b>2.10</b> Tablas de Contingencia</a><ul>
+<li class="chapter" data-level="2.10.1" data-path="tablas-de-contingencia.html"><a href="tablas-de-contingencia.html#las-funciones-spread-y-gather"><i class="fa fa-check"></i><b>2.10.1</b> Las funciones <code>spread</code> y <code>gather</code></a></li>
+</ul></li>
+<li class="chapter" data-level="2.11" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html"><i class="fa fa-check"></i><b>2.11</b> Gráficos y Visualización</a><ul>
+<li class="chapter" data-level="2.11.1" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#histogramas"><i class="fa fa-check"></i><b>2.11.1</b> Histogramas</a></li>
+<li class="chapter" data-level="2.11.2" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#diagrama-de-barras"><i class="fa fa-check"></i><b>2.11.2</b> Diagrama de barras</a></li>
+<li class="chapter" data-level="2.11.3" data-path="graficos-y-visualizacion.html"><a href="graficos-y-visualizacion.html#boxes"><i class="fa fa-check"></i><b>2.11.3</b> Diagramas de Caja y valores atípicos</a></li>
+</ul></li>
+<li class="chapter" data-level="2.12" data-path="ejercicios.html"><a href="ejercicios.html"><i class="fa fa-check"></i><b>2.12</b> Ejercicios</a><ul>
+<li class="chapter" data-level="2.12.1" data-path="ejercicios.html"><a href="ejercicios.html#teoricos"><i class="fa fa-check"></i><b>2.12.1</b> Teóricos</a></li>
+<li class="chapter" data-level="2.12.2" data-path="ejercicios.html"><a href="ejercicios.html#practicos"><i class="fa fa-check"></i><b>2.12.2</b> Prácticos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="distr.html"><a href="distr.html"><i class="fa fa-check"></i><b>3</b> Distribuciones de probabilidad</a><ul>
+<li class="chapter" data-level="3.1" data-path="variable-aleatoria-y-distribucion-de-probabilidad.html"><a href="variable-aleatoria-y-distribucion-de-probabilidad.html"><i class="fa fa-check"></i><b>3.1</b> Variable aleatoria y distribución de probabilidad</a></li>
+<li class="chapter" data-level="3.2" data-path="funciones-de-densidad-de-probabilidad.html"><a href="funciones-de-densidad-de-probabilidad.html"><i class="fa fa-check"></i><b>3.2</b> Funciones de Densidad de Probabilidad</a></li>
+<li class="chapter" data-level="3.3" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html"><i class="fa fa-check"></i><b>3.3</b> Distribución de Probabilidad Normal</a><ul>
+<li class="chapter" data-level="3.3.1" data-path="distribucion-de-probabilidad-normal.html"><a href="distribucion-de-probabilidad-normal.html#dne"><i class="fa fa-check"></i><b>3.3.1</b> Distribución Normal Estándar</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="distribucion-t-de-student.html"><a href="distribucion-t-de-student.html"><i class="fa fa-check"></i><b>3.4</b> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+<li class="chapter" data-level="3.5" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html"><i class="fa fa-check"></i><b>3.5</b> Distribución normal y <span class="math inline">\(t\)</span> de Student en R</a><ul>
+<li class="chapter" data-level="3.5.1" data-path="distribucion-normal-y-t-de-student-en-r.html"><a href="distribucion-normal-y-t-de-student-en-r.html#ejemplos"><i class="fa fa-check"></i><b>3.5.1</b> Ejemplos</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="icph.html"><a href="icph.html"><i class="fa fa-check"></i><b>4</b> Intervalos de Confianza y Pruebas de Hipótesis</a><ul>
+<li class="chapter" data-level="4.1" data-path="ic.html"><a href="ic.html"><i class="fa fa-check"></i><b>4.1</b> Intervalos de Confianza</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="ic.html"><a href="ic.html#interpretacion-de-un-intervalo-de-confianza"><i class="fa fa-check"></i><b>4.1.1</b> Interpretación de un intervalo de confianza</a></li>
+<li class="chapter" data-level="4.1.2" data-path="ic.html"><a href="ic.html#icmu"><i class="fa fa-check"></i><b>4.1.2</b> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+<li class="chapter" data-level="4.1.3" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-proporcion"><i class="fa fa-check"></i><b>4.1.3</b> Intervalo de Confianza para la proporción</a></li>
+<li class="chapter" data-level="4.1.4" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.1.4</b> Intervalo de Confianza para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.1.5" data-path="ic.html"><a href="ic.html#intervalo-de-confianza-para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.1.5</b> Intervalo de Confianza para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="ph.html"><a href="ph.html"><i class="fa fa-check"></i><b>4.2</b> Pruebas de hipótesis</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="ph.html"><a href="ph.html#significancia-tamano-del-efecto-y-potencia-de-la-prueba"><i class="fa fa-check"></i><b>4.2.1</b> Significancia, tamaño del efecto y potencia de la prueba</a></li>
+<li class="chapter" data-level="4.2.2" data-path="ph.html"><a href="ph.html#pvalor"><i class="fa fa-check"></i><b>4.2.2</b> El valor <span class="math inline">\(p\)</span></a></li>
+<li class="chapter" data-level="4.2.3" data-path="ph.html"><a href="ph.html#estadisticos-de-prueba"><i class="fa fa-check"></i><b>4.2.3</b> Estadísticos de Prueba</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html"><i class="fa fa-check"></i><b>4.3</b> Intervalos de confianza en R</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-media"><i class="fa fa-check"></i><b>4.3.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.3.2" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#para-la-proporcion"><i class="fa fa-check"></i><b>4.3.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.3.3" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-medias"><i class="fa fa-check"></i><b>4.3.3</b> Diferencia de medias</a></li>
+<li class="chapter" data-level="4.3.4" data-path="intervalos-de-confianza-en-r.html"><a href="intervalos-de-confianza-en-r.html#diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.3.4</b> Diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html"><i class="fa fa-check"></i><b>4.4</b> Pruebas de Hipótesis en R</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-media-1"><i class="fa fa-check"></i><b>4.4.1</b> Para la media</a></li>
+<li class="chapter" data-level="4.4.2" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-proporcion-1"><i class="fa fa-check"></i><b>4.4.2</b> Para la proporción</a></li>
+<li class="chapter" data-level="4.4.3" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-medias"><i class="fa fa-check"></i><b>4.4.3</b> Para la diferencia de medias</a></li>
+<li class="chapter" data-level="4.4.4" data-path="pruebas-de-hipotesis-en-r.html"><a href="pruebas-de-hipotesis-en-r.html#para-la-diferencia-de-proporciones"><i class="fa fa-check"></i><b>4.4.4</b> Para la diferencia de proporciones</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="ejercicios-1.html"><a href="ejercicios-1.html"><i class="fa fa-check"></i><b>4.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="methods.html"><a href="methods.html"><i class="fa fa-check"></i><b>5</b> Correlación y Regresión</a><ul>
+<li class="chapter" data-level="5.1" data-path="correl.html"><a href="correl.html"><i class="fa fa-check"></i><b>5.1</b> Coeficiente de Correlación</a></li>
+<li class="chapter" data-level="5.2" data-path="lineal.html"><a href="lineal.html"><i class="fa fa-check"></i><b>5.2</b> Regresión lineal simple</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="lineal.html"><a href="lineal.html#regresion-lineal-en-r"><i class="fa fa-check"></i><b>5.2.1</b> Regresión lineal en R</a></li>
+<li class="chapter" data-level="5.2.2" data-path="lineal.html"><a href="lineal.html#coefregre"><i class="fa fa-check"></i><b>5.2.2</b> Interpretación de los coeficientes de regresión</a></li>
+<li class="chapter" data-level="5.2.3" data-path="lineal.html"><a href="lineal.html#bondad-de-ajuste-del-modelo-de-regresion"><i class="fa fa-check"></i><b>5.2.3</b> Bondad de Ajuste del modelo de regresión</a></li>
+<li class="chapter" data-level="5.2.4" data-path="lineal.html"><a href="lineal.html#pruebas-de-hipotesis-para-los-coeficientes-de-la-regresion"><i class="fa fa-check"></i><b>5.2.4</b> Pruebas de Hipótesis para los coeficientes de la regresión</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="mult.html"><a href="mult.html"><i class="fa fa-check"></i><b>5.3</b> Regresión Múltiple</a></li>
+<li class="chapter" data-level="5.4" data-path="regresion-logistica.html"><a href="regresion-logistica.html"><i class="fa fa-check"></i><b>5.4</b> Regresión logística</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="regresion-logistica.html"><a href="regresion-logistica.html#modelo-de-regresion-logistica"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de regresión logística</a></li>
+<li class="chapter" data-level="5.4.2" data-path="regresion-logistica.html"><a href="regresion-logistica.html#regresion-logistica-en-r"><i class="fa fa-check"></i><b>5.4.2</b> Regresión logística en R</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="ejercicios-2.html"><a href="ejercicios-2.html"><i class="fa fa-check"></i><b>5.5</b> Ejercicios</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="bibliografia.html"><a href="bibliografia.html"><i class="fa fa-check"></i>Bibliografía</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Estadística para Contadores y Auditores con R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="graficos-y-visualizacion" class="section level2">
+<h2><span class="header-section-number">2.11</span> Gráficos y Visualización</h2>
+<p>Para realizar gráficas R tiene algunos paquetes disponibles, mas en este texto trabajaremos con el paquete <code>ggplot2</code>. Este paquete produce gráficos como muchos otros paquetes pero no se parece al resto de paquetes debido a que tiene una grámatica subyacente muy profunda <span class="citation">(Wickham <a href="#ref-wickham2016">2016</a>)</span>, esta gramática está basada en la Gramática de los Gráficos descrita en <span class="citation">Wilkinson (<a href="#ref-wilkinson2005">2005</a>)</span>. Esto lo hace un paquete que no solo esta diseñado para problemas preestablecidos sino que se pueden crear nuevos gráficos adaptados a las necesidades del usuario.</p>
+<div id="histogramas" class="section level3">
+<h3><span class="header-section-number">2.11.1</span> Histogramas</h3>
+<p>Los histogramas se utilizan para variables continuas. Un histograma es un gráfico de la distribución de frecuencia de una variable, en el eje vertical se representa la frecuencia (absoluta o relativa) y en el eje horizontal los rangos de los valores.</p>
+<p>En la figura <a href="graficos-y-visualizacion.html#fig:figura1">2.14</a> se muestra el histograma de la variable ventas en millones de dólares del archivo <em>cap2_big4_size.csv</em> ya descrito en la sección <a href="primerR.html#primerR">2.5</a>, este primer histograma ha sido configurado para presentar 12 barras, que las barras sean de color azul con un contorno rojo. Antes de abordar los detalles mencionados discutiremos brevemente el funcionamiento de la gramática de <code>ggplot2</code>, una gráfica realizada en <code>ggplot2</code> empieza por <code>ggplot(data, aes())</code> dentro de <code>aes()</code> se indica las variables que van a intervenir en la gráfica, Luego se añade la <code>geom</code> con la que se va a trabajar en este caso se escogió <code>geom_histogram()</code> puesto que se desea realizar un histograma <span class="citation">(Burchel and Vargas <a href="#ref-hitchhiker2017">2017</a>)</span>. Como se indicó anteriormente se configuró el histograma con 12 barras (<code>bins=12</code>), la opción <code>color="red"</code> permite que el contorno de las barrras sea rojo y la opción <code>fill="blue"</code>hace que las barras sean de color azul.</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">ggplot</span>(big4size, <span class="kw">aes</span>(<span class="dt">x=</span> VTAS<span class="op">/</span><span class="dv">1000000</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb42-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">12</span>, <span class="dt">color=</span> <span class="st">&quot;red&quot;</span>, <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="st">  </span><span class="kw">theme_light</span>()</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figura1"></span>
+<img src="EPCA_files/figure-html/figura1-1.png" alt="Histograma de las Ventas" width="60%" />
+<p class="caption">
+Figura 2.14: Histograma de las Ventas
+</p>
+</div>
+<p>Para configurar las etiquetas de los ejes podemos añadir las opciones <code>xlab( )</code> y <code>ylab( )</code>. En la figura <a href="graficos-y-visualizacion.html#fig:figura2">2.15</a> se aprecia el histograma con las etiquetas de los ejes añadidos.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">ggplot</span>(big4size, <span class="kw">aes</span>(<span class="dt">x=</span> VTAS<span class="op">/</span><span class="dv">1000000</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">bins=</span><span class="dv">12</span>, <span class="dt">color=</span> <span class="st">&quot;red&quot;</span>,  <span class="dt">fill=</span><span class="st">&quot;blue&quot;</span> ) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb43-3" title="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Ventas en Millones de Dólares&quot;) + ylab(&quot;</span>Frecuencia<span class="st">&quot;) +</span></a>
+<a class="sourceLine" id="cb43-4" title="4"><span class="st">  theme_light()</span></a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figura2"></span>
+<img src="EPCA_files/figure-html/figura2-1.png" alt="Histograma de las Ventas con Etiquetas en los Ejes" width="70%" />
+<p class="caption">
+Figura 2.15: Histograma de las Ventas con Etiquetas en los Ejes
+</p>
+</div>
+<p>Usando el archivo <code>Ranking2018Guayas.csv</code>, hacemos el histograma de las ventas en millones de acuerdo al tamaño de la empresa. En la figura <a href="graficos-y-visualizacion.html#fig:figura3">2.16</a> se observa el histograma, para obtener un gráfico agradable a la vista se cambia la orientación de las marcas de <span class="math inline">\(0^\circ\)</span> a <span class="math inline">\(90^\circ\)</span> en el eje <span class="math inline">\(x\)</span> con la instrucción <code>theme(axis.text.x = element_text(angle = 90, hjust = 1))</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">ggplot</span>(rank2018, <span class="kw">aes</span>(<span class="dt">x=</span>VENTAS<span class="op">/</span><span class="dv">1000000</span>, <span class="dt">fill=</span>TAMAÑO)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha=</span><span class="fl">0.3</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>,<span class="dt">bins =</span> <span class="dv">20</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb44-3" title="3"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb44-4" title="4">        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill=</span><span class="st">&quot;white&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb44-5" title="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Ventas en Millones&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>) </a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figura3"></span>
+<img src="EPCA_files/figure-html/figura3-1.png" alt="Histograma de las Ventas de Acuerdo al Tamaño de la empresa" width="60%" />
+<p class="caption">
+Figura 2.16: Histograma de las Ventas de Acuerdo al Tamaño de la empresa
+</p>
+</div>
+<p>Se puede observar en la <a href="graficos-y-visualizacion.html#fig:figura3">2.16</a> que algunas empresas grandes tienen mayores ventas que el resto de empresas. Una mejor forma de comparar la distribución de una variable de acuerdo a otra variable es usar los diagramas de caja que serán discutidos en profundidad en la sección <a href="graficos-y-visualizacion.html#boxes">2.11.3</a>.</p>
+<p>Si se desea ver los histogramas de acuerdo al tamaño de empresa se puede separar los histogramas con la opción <code>facet_grid(. ~ VARIABLE)</code>, dentro de esta opción se escribe el nombre de la variable por la que se quiere separar el gráfico, en este caso se escribe <code>facet_grid(. ~ TAMAÑO)</code>. Un ejemplo se visualiza en la figura <a href="graficos-y-visualizacion.html#fig:histfacet">2.17</a>.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">ggplot</span>(rank2018, <span class="kw">aes</span>(<span class="dt">x=</span>VENTAS<span class="op">/</span><span class="dv">1000000</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb45-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">alpha=</span><span class="fl">0.3</span>, <span class="dt">color=</span><span class="st">&quot;black&quot;</span>,<span class="dt">bins =</span> <span class="dv">10</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-3" title="3"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle =</span> <span class="dv">90</span>, <span class="dt">hjust =</span> <span class="dv">1</span>), </a>
+<a class="sourceLine" id="cb45-4" title="4">        <span class="dt">panel.background =</span> <span class="kw">element_rect</span>(<span class="dt">fill=</span><span class="st">&quot;white&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-5" title="5"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Ventas en Miles&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb45-6" title="6"><span class="st">  </span><span class="kw">facet_grid</span>(. <span class="op">~</span><span class="st"> </span>TAMAÑO)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:histfacet"></span>
+<img src="EPCA_files/figure-html/histfacet-1.png" alt="Histograma de las Ventas de Acuerdo al Tamaño de la empresa" width="60%" />
+<p class="caption">
+Figura 2.17: Histograma de las Ventas de Acuerdo al Tamaño de la empresa
+</p>
+</div>
+<div id="simetria-y-sesgo" class="section level4">
+<h4><span class="header-section-number">2.11.1.1</span> Simetría y sesgo</h4>
+<p>Un histograma es <em>simétrico</em> en forma si hacia la derecha y la izquierda tiene la misma forma como se aprecia en la parte superior de la figura <a href="graficos-y-visualizacion.html#fig:sime1">2.18</a> <span class="citation">(Lind, Marchal, and Wathen <a href="#ref-lind2019">2019</a>)</span>. Cuando el lado derecho del histograma, que contiene la mitad más grande de las observaciones en los datos, se extiende una distancia mayor que el lado izquierdo se dice que el histograma esta <strong>sesgado a la derecha</strong> <span class="citation">(McEvoy <a href="#ref-envoy2018">2018</a>)</span> como se aprecia en la parte superior de la figura <a href="graficos-y-visualizacion.html#fig:sesgoright">2.19</a>. Finalmente el histograma es <strong>sesgado a la izquierda</strong> cuando el lado izquierdo se extiende una distancia mucho mayor que el lado derecho, un ejemplo se aprecia en la parte superior de la figura <a href="graficos-y-visualizacion.html#fig:sesgoleft">2.20</a>.</p>
+<p>En la sección <a href="tendcentr.html#tendcentr">2.6</a> se discutieron las medidas de tendencia central, ¿cómo se relacionan las medidas de tendencia central y el sesgo? Si la distribución es simétrica se cumple que <span class="math inline">\(\bar{x}=Me=Mo\)</span>, esto se puede visualizar en la parte inferior de la figura <a href="graficos-y-visualizacion.html#fig:sime1">2.18</a>. Cuando es sesgada a la derecha se cumple que <span class="math inline">\(Mo &lt; Me &lt; \bar{x}\)</span> en la parte inferior de la figura <a href="graficos-y-visualizacion.html#fig:sesgoright">2.19</a> se visualiza la moda de color azul, la mediana de color rojo y la media de color verde. Mientras que si es sesgada a la izquierda se puede verificar que <span class="math inline">\(\bar{x} &lt; Me &lt; Mo\)</span> como se aprecia en la parte inferior de la figura <a href="graficos-y-visualizacion.html#fig:sesgoleft">2.20</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:sime1"></span>
+<img src="EPCA_files/figure-html/sime1-1.png" alt="Histograma Simétrico" width="50%" />
+<p class="caption">
+Figura 2.18: Histograma Simétrico
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:sesgoright"></span>
+<img src="EPCA_files/figure-html/sesgoright-1.png" alt="Histograma Sesgado a la Derecha" width="50%" />
+<p class="caption">
+Figura 2.19: Histograma Sesgado a la Derecha
+</p>
+</div>
+<div class="figure" style="text-align: center"><span id="fig:sesgoleft"></span>
+<img src="EPCA_files/figure-html/sesgoleft-1.png" alt="Histograma Sesgado a la Izquierda" width="60%" />
+<p class="caption">
+Figura 2.20: Histograma Sesgado a la Izquierda
+</p>
+</div>
+
+</div>
+</div>
+<div id="diagrama-de-barras" class="section level3">
+<h3><span class="header-section-number">2.11.2</span> Diagrama de barras</h3>
+<p>Los histogramas se usan para variables cuantitativas, mientras que los gráficos o diagramas de barras se utilizan para variables cualitativas. Al igual que los histogramas los diagramas de barras se elaboran para las frecuencias absolutas o las relativas <span class="citation">(Moon <a href="#ref-kwm2016">2016</a>)</span>.</p>
+<p>Para ejemplificar la elaboración de diagrama de barras, trabajamos con el conjunto de datos<code>Ranking2018Comercio.csv</code> que contiene una muestra de 507 empresas de Ecuador dedicadas al comercio.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">rank2018com =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;Ranking2018Comercio.csv&quot;</span>,<span class="dt">header =</span> T,<span class="dt">sep=</span><span class="st">&quot;;&quot;</span>,<span class="dt">dec=</span><span class="st">&quot;,&quot;</span>)</a>
+<a class="sourceLine" id="cb46-2" title="2"><span class="kw">str</span>(rank2018com)</a></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    507 obs. of  12 variables:
+##  $ EXPEDIENTE: int  103998 93937 11069 64400 165341 49377 23140 95267 134199 139976 ...
+##  $ TIPO      : Factor w/ 3 levels &quot;ANÓNIMA&quot;,&quot;RESPONSABILIDAD LIMITADA&quot;,..: 1 2 1 1 1 1 2 2 1 3 ...
+##  $ ACTIVIDAD : Factor w/ 112 levels &quot;G4510.01&quot;,&quot;G4520.01&quot;,..: 69 1 69 4 69 42 71 76 26 64 ...
+##  $ REGIÓN    : Factor w/ 4 levels &quot;COSTA&quot;,&quot;GALAPAGOS&quot;,..: 1 4 4 4 1 4 1 4 1 4 ...
+##  $ PROVINCIA : Factor w/ 16 levels &quot;AZUAY&quot;,&quot;BOLIVAR&quot;,..: 7 14 12 12 7 12 5 1 7 12 ...
+##  $ TAMA      : Factor w/ 4 levels &quot;GRANDE&quot;,&quot;MEDIANA&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ SECTOR    : Factor w/ 2 levels &quot;MERCADO DE VALORES&quot;,..: 2 1 2 2 2 2 2 2 2 2 ...
+##  $ EMPLEADOS : int  145 84 560 127 108 65 65 20 45 4 ...
+##  $ ACTIVO    : num  16498975 11244874 19013933 9995738 13015775 ...
+##  $ PATRIMONIO: num  11084842 4368086 5441046 5025093 4353938 ...
+##  $ VENTAS    : num  54939461 29561928 27523262 20630697 20409277 ...
+##  $ UTILIDAD  : num  1180875 596397 2935434 333168 81757 ...</code></pre>
+<p>El conjunto de datos tiene 507 observaciones con 12 variables. Las variables presentes en este conjunto de datos son:</p>
+<ol style="list-style-type: decimal">
+<li><code>EXPEDIENTE</code> variable cualitativa que almacena el número de expediente asignado por la Superintendencia de Compañías.</li>
+<li><code>TIPO</code> es una variable cualitativa con un nivel de medición nominal que almacena el tipo de compañía. En esta variable existen 3 niveles.</li>
+<li><code>ACTIVIDAD</code> variable cualitativa con nivel de medición nominal que almacena la actividad económica de la empresa, estas actividades se rigen por un catalógo dado por la superintendencia.</li>
+<li><code>REGIÓN</code> variable cualittativa con nivel de medición nominal que almacena la región del país a la que pertenece la empresa.</li>
+<li><code>PROVINCIA</code> variable cualitativa con nivel de medición nominal que almacena la provincia a la que pertenece la empresa.</li>
+<li><code>TAMA</code> variable cualitativa con nivel de medición ordinal que almacena el tamaño de la empresa.</li>
+<li><code>SECTOR</code> variable cualitativa con nivel de medición ordinal que indica el sector al que pertenece la empresa.</li>
+<li><code>EMPLEADOS</code>variable cuantitativa discreta que almacena el número de empleados de la empresa.</li>
+<li><code>ACTIVO</code> variable cuantitativa continua que almacena el valor de los activos en libros de la empresa.</li>
+<li><code>PATRIMONIO</code> variable cuantitativa continua que almacena el valor del patrimonio en libros de la empresa.</li>
+<li><code>VENTAS</code> variable cuantitativa continua que almacena el valor de las ventas en libros de la empresa.</li>
+<li><code>UTILIDAD</code> variable cuantitativa continua que almacena el valor de la utilidad en libros de la empresa.</li>
+</ol>
+<p>Como hemos dicho anteriormente los diagramas de barra se utilizan para variables cualitativas. Comenzamos elaborando una tabla de frecuencias de las empresas por región.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">tabla_reg &lt;-<span class="st"> </span>rank2018com <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(REGIÓN) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">Frecuencia=</span><span class="kw">n</span>()) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">Porcentaje =</span> <span class="kw">round</span>(<span class="dv">100</span><span class="op">*</span>Frecuencia<span class="op">/</span><span class="kw">sum</span>(Frecuencia),<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb48-5" title="5">  ) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb48-6" title="6"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(Porcentaje))</a>
+<a class="sourceLine" id="cb48-7" title="7"><span class="kw">print</span>(tabla_reg)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 3
+##   REGIÓN    Frecuencia Porcentaje
+##   &lt;fct&gt;          &lt;int&gt;      &lt;dbl&gt;
+## 1 COSTA            368      72.6 
+## 2 SIERRA           133      26.2 
+## 3 ORIENTE            4       0.79
+## 4 GALAPAGOS          2       0.39</code></pre>
+<p>Para hacer diagramas de barras se utiliza <code>geom_bar()</code> en este caso como deseamos hacer un diagrama de barras de las frecuencias dentro de <code>geom_bar()</code> esvribimos <code>stat="count"</code>. En la figura <a href="graficos-y-visualizacion.html#fig:barras1">2.21</a> se observa el gráfico de barras de las empresas por región.</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">ggplot</span>(rank2018com, <span class="kw">aes</span>(<span class="dt">x=</span>REGIÓN)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb50-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>,<span class="dt">col=</span><span class="st">&quot;black&quot;</span>,<span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:barras1"></span>
+<img src="EPCA_files/figure-html/barras1-1.png" alt="Gráfico de Barras de las empresas por Región" width="60%" />
+<p class="caption">
+Figura 2.21: Gráfico de Barras de las empresas por Región
+</p>
+</div>
+<p>En la figura se observa que las regiones están en orden alfabético. Supongamos que se desea ordenar las regiones en el siguiente orden:</p>
+<ol style="list-style-type: decimal">
+<li>Costa</li>
+<li>Sierra</li>
+<li>Oriente</li>
+<li>Galápagos</li>
+</ol>
+<p>Para lograr este objetivo, antes de hacer el diagrama de barras debemos reordenar las regiones. Como se muestra a continuación:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">rank2018com<span class="op">$</span>REGIÓN &lt;-<span class="st"> </span><span class="kw">factor</span>(rank2018com<span class="op">$</span>REGIÓN,</a>
+<a class="sourceLine" id="cb51-2" title="2">                             <span class="dt">levels =</span> <span class="kw">c</span>(<span class="st">&quot;COSTA&quot;</span>, <span class="st">&quot;SIERRA&quot;</span>, <span class="st">&quot;ORIENTE&quot;</span>, <span class="st">&quot;GALAPAGOS&quot;</span>))</a></code></pre></div>
+<p>Luego de reordenar las regiones podemos volver a realizar el gráfico de barras pero esta vez obtendremos las regiones en el orden deseado como se observa en la figura <a href="graficos-y-visualizacion.html#fig:barras2">2.22</a>:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">ggplot</span>(rank2018com, <span class="kw">aes</span>(<span class="dt">x=</span>REGIÓN)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb52-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>,<span class="dt">col=</span><span class="st">&quot;black&quot;</span>,<span class="dt">fill=</span><span class="st">&quot;white&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb52-3" title="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:barras2"></span>
+<img src="EPCA_files/figure-html/barras2-1.png" alt="Gráfico de Barras de las empresas por Región (Ordenadas)" width="60%" />
+<p class="caption">
+Figura 2.22: Gráfico de Barras de las empresas por Región (Ordenadas)
+</p>
+</div>
+<p>Supongamos que queremos hacer un gráfico de barras de las empresas por región y por tamaño. Elaboremos primero una tabla de contingencia que contenga la información solicitada.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">tama.reg =<span class="st"> </span>rank2018com <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(TAMA, REGIÓN)<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n=</span><span class="kw">n</span>())<span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-4" title="4"><span class="st">  </span><span class="kw">spread</span>(TAMA, n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb53-5" title="5"><span class="st">  </span><span class="kw">replace</span>(., <span class="kw">is.na</span>(.), <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb53-6" title="6"></a>
+<a class="sourceLine" id="cb53-7" title="7"><span class="kw">print</span>(tama.reg)</a></code></pre></div>
+<pre><code>## # A tibble: 4 x 5
+##   REGIÓN    GRANDE MEDIANA MICROEMPRESA PEQUEÑA
+##   &lt;fct&gt;      &lt;dbl&gt;   &lt;dbl&gt;        &lt;int&gt;   &lt;dbl&gt;
+## 1 COSTA          5      13          264      86
+## 2 SIERRA         6      11           73      43
+## 3 ORIENTE        0       0            3       1
+## 4 GALAPAGOS      0       0            2       0</code></pre>
+<p>Para elaborar el gráfico agregamos la opción <code>fill = TAMA</code> junto a <code>x=REGIÓN</code></p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">ggplot</span>(rank2018com, <span class="kw">aes</span>(<span class="dt">x=</span>REGIÓN,<span class="dt">fill=</span>TAMA)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb55-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>,<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb55-3" title="3"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:barras3"></span>
+<img src="EPCA_files/figure-html/barras3-1.png" alt="Gráfico de Barras de las empresas por Región y por Tamaño" width="60%" />
+<p class="caption">
+Figura 2.23: Gráfico de Barras de las empresas por Región y por Tamaño
+</p>
+</div>
+<p>Se puede notar que en las leyendas ubicadas a la derecha del histograma, el título es <em>TAMA</em> porque la variable tiene ese nombre si quisierámos poner el nombre completo agregamos la opción <code>scale_fill_discrete(name="Tamaño")</code></p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">ggplot</span>(rank2018com, <span class="kw">aes</span>(<span class="dt">x=</span>REGIÓN,<span class="dt">fill=</span>TAMA)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>,<span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb56-3" title="3"><span class="st">  </span><span class="kw">scale_fill_discrete</span>(<span class="dt">name=</span><span class="st">&quot;Tamaño&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb56-4" title="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span><span class="st"> </span><span class="kw">ylab</span>(<span class="st">&quot;Frecuencia&quot;</span>)</a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:barras4"></span>
+<img src="EPCA_files/figure-html/barras4-1.png" alt="Gráfico de Barras de las empresas por Región y por Tamaño" width="60%" />
+<p class="caption">
+Figura 2.24: Gráfico de Barras de las empresas por Región y por Tamaño
+</p>
+</div>
+</div>
+<div id="boxes" class="section level3">
+<h3><span class="header-section-number">2.11.3</span> Diagramas de Caja y valores atípicos</h3>
+<p>En la figura <a href="graficos-y-visualizacion.html#fig:figura3">2.16</a> se pretendía mostrar la distribución de las ventas de acuerdo al tamaño de la empresa. Pero el histograma no mostraba claramente la distribución de acuerdo al tamaño de la empresa. una alternativa es usar un diagrama de caja.</p>
+<p>Un diagrama de caja está formado por 5 valores que lo resumen, estos 5 valores se muestran en la figura <a href="graficos-y-visualizacion.html#fig:caja1">2.25</a>. La distancia entre el primer y el tercer cuartil se la conoce como rango intercuartílico (IQR, por sus siglas en inglés). El límite superior es igual al tercer cuartil más 1.5 veces el rango intercuartílico, valores mayores a esta cantidad se consideran valores atípicos. Mientras que el límite inferior es igual al primer cuartil menos 1.5 veces el rango intercuartílico y valores menores a esta cantidad se consideran valores atípicos [envoy2018].</p>
+<p><span class="math display" id="eq:iqr">\[\begin{equation} 
+  IQR = Q_3 - Q_1
+  \tag{2.13}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:ls">\[\begin{equation} 
+  LS = Q_3 + 1.5IQR
+  \tag{2.14}
+\end{equation}\]</span></p>
+<p><span class="math display" id="eq:li">\[\begin{equation} 
+  LI = Q_1 - 1.5IQR
+  \tag{2.15}
+\end{equation}\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:caja1"></span>
+<img src="boxplot3.png" alt="Partes de un Diagrama de Caja" width="40%" />
+<p class="caption">
+Figura 2.25: Partes de un Diagrama de Caja
+</p>
+</div>
+<p>En la figura <a href="graficos-y-visualizacion.html#fig:figura4">2.26</a> se observan los diagramas de caja de las ventas según el tamaño de la empresa. Se puede notar que existen diferencias entre las ventas de las empresas medianas, las microempresas y las pequeñas. El <span class="math inline">\(50\%\)</span> de las empresas medianas vende más de <span class="math inline">\(1250000\)</span>, mientras que todas las microempresas venden menos de <span class="math inline">\(250000\)</span>. Las empresas pequeñas que venden más de <span class="math inline">\(500000\)</span> son atípicas, mientras que en las empresas medianas no se presentan valores atípicos.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">ggplot</span>(rank2018, <span class="kw">aes</span>(TAMAÑO, VENTAS<span class="op">/</span><span class="dv">1000</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb57-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;Tamaño de las empresas&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Ventas en Miles de Dólares&quot;) +theme_light()</span></a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figura4"></span>
+<img src="EPCA_files/figure-html/figura4-1.png" alt="Diagrama de Caja de las Ventas según el Tamaño de la empresa" width="60%" />
+<p class="caption">
+Figura 2.26: Diagrama de Caja de las Ventas según el Tamaño de la empresa
+</p>
+</div>
+<p>Si se quisiera analizar con mayor detalle las microempresas se podría seleccionar solo las empresas con este tamaño y elaborar el diagrama de caja correspondiente, para lograr esto se utiliza la función <code>subset(df, cond)</code>. donde <code>df</code> corresponde al <em>data frame</em> usado y <em>cond</em> a la regla que deben cumplir los datos a ser analizados.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">ggplot</span>(<span class="kw">subset</span>(rank2018, TAMAÑO <span class="op">==</span><span class="st"> &quot;MICROEMPRESA&quot;</span>), <span class="kw">aes</span>(TAMAÑO, VENTAS<span class="op">/</span><span class="dv">1000</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb58-3" title="3"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Ventas en Miles de Dólares&quot;) +theme_light()</span></a></code></pre></div>
+<div class="figure" style="text-align: center"><span id="fig:figura5"></span>
+<img src="EPCA_files/figure-html/figura5-1.png" alt="Diagrama de Caja de las Ventas de las Microempresas" width="60%" />
+<p class="caption">
+Figura 2.27: Diagrama de Caja de las Ventas de las Microempresas
+</p>
+</div>
+
+</div>
+</div>
+<h3>Bibliografía</h3>
+<div id="refs" class="references">
+<div id="ref-hitchhiker2017">
+<p>Burchel, Jodie, and Mauricio Vargas. 2017. <em>The Hitchhiker’s Guide to Ggplot2</em>. 1a. ed. Estados Unidos: Leanpub.</p>
+</div>
+<div id="ref-lind2019">
+<p>Lind, Douglas A., William G. Marchal, and Samuel A. Wathen. 2019. <em>Basic Statistics for Business and Economics</em>. 9a. ed. Estados Unidos: McGraw-Hill Education.</p>
+</div>
+<div id="ref-envoy2018">
+<p>McEvoy, David M. 2018. <em>A Guide to Business Statistics</em>. 1a. ed. Estados Unidos: JohnWiley &amp; Sons Inc.</p>
+</div>
+<div id="ref-kwm2016">
+<p>Moon, Keon-Woong. 2016. <em>Learn Ggplot2 Using Shiny App</em>. 1a. ed. Estados Unidos: Springer Cham.</p>
+</div>
+<div id="ref-wickham2016">
+<p>Wickham, Hadley. 2016. <em>Ggplot2 Elegant Graphics for Data Analysis</em>. 2a. ed. Estados Unidos: Springer.</p>
+</div>
+<div id="ref-wilkinson2005">
+<p>Wilkinson, Leland. 2005. <em>The Grammar of Graphics</em>. 2a. ed. New York: Springer-Verlag. <a href="https://www.springer.com/us/book/9780387245447">https://www.springer.com/us/book/9780387245447</a>.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="tablas-de-contingencia.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ejercicios.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["EPCA.pdf"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

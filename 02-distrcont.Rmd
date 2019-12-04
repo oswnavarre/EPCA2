@@ -1,0 +1,325 @@
+```{r include = FALSE}
+if(!knitr:::is_html_output())
+{
+  knitr::opts_chunk$set(fig.pos = 'h!')
+}
+```
+
+# Distribuciones de probabilidad {#distr}
+
+
+En este capítulo abordaremos las distribuciones de probabilidad que se necesitarán en las siguientes secciones. Es necesario para empezar, introducir el concepto de variable aleatoria. 
+
+## Variable aleatoria y distribución de probabilidad
+
+Consideremos un experimento donde lanzamos tres monedas y observamos los resultados. Podemos representar todos los eventos posibles:
+
+* Cara en la primera moneda, cara en la segunda y cara en la tercera. 
+* Cara en la primera moneda, cara en la segunda y sello en la tercera.
+* Cara en la primera moneda, sello en la segunda y cara en la tercera.
+* Cara en la primera moneda, sello en la segunda y sello en la tercera.
+* Sello en la primera moneda, cara en la segunda y cara en la tercera. 
+* Sello en la primera moneda, cara en la segunda y sello en la tercera.
+* Sello en la primera moneda, sello en la segunda y cara en la tercera.
+* Sello en la primera moneda, sello en la segunda y sello en la tercera
+
+Pero podríamos también hacer una lista de estos eventos en una forma diferente, en lugar de definir cada evento indicando el resultado de cada moneda, podemos contar el número de caras o sellos. Por ejemplo si trabajamos con el número de sellos, los eventos son:
+
+* 0 sellos 
+* 1 sello
+* 1 sello
+* 2 sellos
+* 1 sellos
+* 2 sellos
+* 2 sellos
+* 3 sellos
+
+El número de sellos recibe el nombre de **variable aleatoria**, las variables aleatorias pueden ser representadas con letras mayúsculas. Definamos a $X$ como la variable aleatoria **número de sellos**. Además nos interesará la probabilidad $P$ de cada valor posible de $X$. En este caso los valores posibles de $X$ son $0$, $1$, $2$ y $3$ [@uboe2017].
+
+La probabilidad se la calcula de forma fácil como el número de resultados favorables sobre el número de resultados posibles. Por ejemplo si queremos obtener en este caso $P\left(X =2 \right)$, el número de resultados favorables es $3$ porque en tres oportunidades se pueden obtener 2 sellos, mientras que el número de resultados posibles es 8, en términos matemáticos $P\left(X=2\right)= \frac{3}{8}$.
+
+Formalmente podemos definir a una **variable aleatoria** como una regla o función que asigna un número a cada resultado de un experimento. Existen dos tipos de variables aleatorias las **discretas** y las **continuas**, las primeras se usan cuando los valores que puede tomar la variable son contables y las continuas se utilizan cuando los valores posibles de la variable son incontables. 
+
+Un ejemplo de variable aleatoria continua puede ser el tiempo que le puede tomar a una persona llenar su declaración de impuesto a la renta. Puede ocurrir que una persona tenga la información lista y le tome mínimo 30 minutos mientras que a otra persona sin la información lista le tome 5 horas máximo. Sea $X= \text{tiempo en minutos para llenar una declaración}$ con el valor mínimo 30 y el máximo de 300. Si intentamos contar el número posible de valores que puede tomar $X$, empezamos por el valor mínimo que es $30$ y luego buscamos el valor que sigue de $30$ ¿cuál es el valor que sigue de 30 en este caso? ¿31? ¿30.5? ¿30.05? ¿30.005? no podemos determinar el siguiente valor porque entre $30$ y $30.005$ por ejemplo existe una cantidad infinita de valores. Por lo tanto no podemos contar el número de valores posibles de $X$, y $X$ es continua.
+
+Una *distribución de probabilidad* es una tabla, fórmula o gráfico que describe los valores de una variable aleatoria y la probabilidad asociada a estos valores.
+
+## Funciones de Densidad de Probabilidad
+
+Retomemos la variable aleatoria $X= \text{tiempo en minutos para llenar una declaración}$. Si graficamos un histograma de frecuencias relativas, la altura de cada barra representa la proporción o porcentaje de valores en cada clase y la suma de todas las áreas es $1$. Si el tamaño de la muestra aumenta, se puede reducir la longitud de cada clase y la altura va formando una curva más suave. La curva a la que se aproxima recibe el nombre de **curva de densidad** como se ve en la \@ref(fig:densidad). 
+
+La densidad de la probabilidad puede ser descrita por una expresión matemática $f\left(x\right)$, que recibe el nombre de **distribución de probabilidad** o **función de densidad de probabilidad**. Las funciones de densidad de probabilidad de variables continuas cumplen con algunas propiedades:
+
+
+* El área bajo la distribución de probabilidad es igual a $1$
+* La probabilidad de que $X$ se encuentre en determinado intervalo $\left(a,b\right)$ es igual al área bajo la curva entre los dos puntos $a$ y $b$. 
+* $P\left(X=c\right)=0$ para cualquier valor $c$ para el que se encuentre definida la función de probabilidad.
+
+
+```{r densidad, out.width = "70%", echo=FALSE,fig.cap="Curva de Densidad"}
+
+dt <- rnorm(10000, mean = 80, sd=10)
+dt <- as.data.frame(dt)
+names(dt) <- c("Tiempo")
+
+
+
+p1 <-ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=10,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666")  + xlab("") + theme_light()
+
+p2 <- ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=20,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666") + xlab("")  + theme_light()
+
+p3 <- ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=30,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666") + xlab("")  + theme_light()
+
+p4 <- ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=40,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666") + xlab("")  + theme_light()
+
+p5 <- ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=50,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666") + xlab("")  + theme_light()
+
+p6 <- ggplot(dt, aes(x=Tiempo)) + 
+  geom_histogram(aes(y=..density..), bins=60,colour="black", fill="white") +
+  ylab("") + geom_density(alpha=.2, fill="#FF6666") + xlab("")  + theme_light()
+
+
+grid.arrange(p1,p2,p3,p4,p5,p6)
+
+```
+
+## Distribución de Probabilidad Normal
+
+La distribución de probabilidad más usada para describir variables aleatorias continuas es la **distribución de probabilidad normal**. Esta distribución se la puede encontrar en variables como la altura de personas, los pesos, calificaciones, mediciones científicas, cantidad de lluvia, etc.
+
+La distribución normal tiene la forma de una campana, como se observa en la figura \@ref(fig:normal)
+
+```{r normal, out.width = "50%", echo=FALSE,fig.cap="Distribución Normal", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1.20) +
+  ylab("") +   scale_y_continuous(breaks = NULL) + scale_x_continuous(breaks = c(0),labels = parse(text = TeX('$\\mu$') )) +
+  xlab("") + geom_hline(yintercept = -0.01, colour ="black") + geom_vline(xintercept = 0, linetype ="dashed", colour ="lightblue",size =1.5) +theme(axis.text = element_text(size = 15), panel.background = element_rect(fill="white")) 
+
+```
+
+La función de densidad de probabilidad de la distribución normal es:
+
+\begin{equation} 
+f\left(x\right)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{\dfrac{-\left(x-\mu\right)^2}{2\sigma^2}}
+(\#eq:normalpdf)
+\end{equation}
+
+como se puede observar en la ecuación \@ref(eq:normalpdf), la distribución normal tiene dos parámetros la media $\mu$ y la desviación $\sigma$ cuando una variable aleatoria $X$ tiene una distribución normal se escribe $X \sim \mathcal{N}\left(\mu,\sigma \right)$, y se observan las siguientes propiedades de acuerdo a estos parámetros.
+
+* La distribución normal alcanza su máximo en la media, que se ubica en el centro de la curva por esta razón se dice que la distribución normal es simétrica respecto a la media.
+* La media es un parámetro de localización, en la figura \@ref(fig:normalmus) se observan tres distribuciones normales con la misma desviación pero diferentes medias.
+
+```{r normalmus, out.width = "50%", echo=FALSE,fig.cap="Diferentes distribuciones normales con diferentes medias", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data.frame(x = c(-6, 6)), aes(x)) + 
+  mapply(function(mean, sd, col) {
+    stat_function(fun = dnorm, args = list(mean = mean, sd = sd), col = col)
+  }, 
+  # enter means, standard deviations and colors here
+  mean = c(0, -2, 2), 
+  sd = c(1, 1, 1), 
+  col = c('red', 'blue', 'green')
+  ) + ylab("") +   scale_y_continuous(breaks = NULL) + scale_x_continuous(breaks = c(-2,0,2),labels = c(parse(text = TeX('$\\mu_1$')), parse(text = TeX('$\\mu_2$')), parse(text = TeX('$\\mu_3$'))  ) ) +
+  xlab("") + geom_hline(yintercept = -0.01, colour ="black") + geom_vline(xintercept = c(-2,0,2), linetype ="dashed", colour ="lightblue",size =1.5) +theme(axis.text = element_text(size = 15), panel.background = element_rect(fill="white"))  
+
+```
+
+* La desviación es un parámetro que afecta a la forma de la curva, a mayor desviación la curva se acerca hacia el eje de las $X$  o se "aplana". Y a menor desviación la curva se "estrecha". Este comportamiento se aprecia en la fiugra \@ref(fig:normalsds)
+
+```{r normalsds, out.width = "50%", echo=FALSE,fig.cap="Diferentes distribuciones normales con diferentes desviaciones", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data.frame(x = c(-6, 6)), aes(x)) + 
+  mapply(function(mean, sd, col) {
+    stat_function(fun = dnorm, args = list(mean = mean, sd = sd), col = col,size=1.20)
+  }, 
+  # enter means, standard deviations and colors here
+  mean = c(0,0, 0, 0, 0), 
+  sd = c(2,1.5,1, 0.5, 0.40), 
+  col = c('purple','black','red', 'blue', 'green')
+  ) + ylab("") +   scale_y_continuous(breaks = NULL) + scale_x_continuous(breaks = NULL) +
+  xlab("") + geom_hline(yintercept = -0.01, colour ="black") + theme(panel.background = element_rect(fill="white"))
+```
+
+* El porcentaje de valores en algunos intervalos que se usan comúnmente son:
+  * $68.3\%$ de los valores de una variable normal aleatoria se encuentran a más o menos una desviación de la media, como se muestra en la figura \@ref(fig:unasd)
+  * $95.4\%$ de los valores de una variable normal aleatoria se encuentran a más o menos dos desviaciones de la media, como se muestra en la figura \@ref(fig:dossd)
+  * $99.7\%$ de los valores de una variable normal aleatoria se encuentran a más o menos tres desviaciones de la media, como se muestra en la figura \@ref(fig:tressd)
+
+```{r unasd, out.width = "50%", echo=FALSE,fig.cap="Porcentaje a 1 desviación de la media", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1.20) +
+  ylab("") +   scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(-1,0,1),labels = c(parse(text = TeX('$\\mu - 1\\sigma$')),parse(text = TeX('$\\mu $') ),parse(text = TeX('$\\mu + 1 \\sigma$') ) )) +
+  xlab("") + geom_hline(yintercept = 0, colour ="black") +
+  geom_segment(aes(x = 0, y=0, xend=0, yend=dnorm(0,mean=0,sd=1)), colour ="black",linetype="dashed") +
+  theme(axis.text = element_text(size = 15), 
+        panel.background = element_rect(fill="white"),axis.ticks = element_blank())  +
+  geom_segment(aes(x=-1, y=0, xend = -1, yend = dnorm(mean=0, sd=1, x=-1)), colour="green",size =1.20, linetype ="dashed" ) +
+  geom_segment(aes(x=1, y=0, xend = 1, yend = dnorm(mean=0, sd=1, x=1)), colour="green",size =1.20, linetype ="dashed" ) +
+  geom_area(stat = "function", fun = dnorm, args = list(0, 1), 
+            fill = "lightgreen", xlim = c(-1, 1), alpha=0.8)
+
+```
+
+```{r dossd, out.width = "50%", echo=FALSE,fig.cap="Porcentaje a 2 desviaciones de la media", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1.20) +
+  ylab("") +   scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(-2,0,2),labels = c(parse(text = TeX('$\\mu - 2\\sigma$')),parse(text = TeX('$\\mu $') ),parse(text = TeX('$\\mu + 2 \\sigma$') ) )) +
+  xlab("") + geom_hline(yintercept = 0, colour ="black") +
+  geom_segment(aes(x = 0, y=0, xend=0, yend=dnorm(0,mean=0,sd=1)), colour ="black",linetype="dashed") +
+  theme(axis.text = element_text(size = 15), 
+        panel.background = element_rect(fill="white"),axis.ticks = element_blank())  +
+  geom_segment(aes(x=-2, y=0, xend = -2, yend = dnorm(mean=0, sd=1, x=-2)), colour="blue",size =1.20, linetype ="dashed" ) +
+  geom_segment(aes(x=2, y=0, xend = 2, yend = dnorm(mean=0, sd=1, x=2)), colour="blue",size =1.20, linetype ="dashed" ) +
+  geom_area(stat = "function", fun = dnorm, args = list(0, 1), 
+            fill = "lightblue", xlim = c(-2, 2), alpha=0.6)
+
+```
+
+```{r tressd, out.width = "50%", echo=FALSE,fig.cap="Porcentaje a 3 desviaciones de la media", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1.20) +
+  ylab("") +   scale_y_continuous(breaks = NULL) + 
+  scale_x_continuous(breaks = c(-3,0,3),labels = c(parse(text = TeX('$\\mu - 3\\sigma$')),parse(text = TeX('$\\mu $') ),parse(text = TeX('$\\mu + 3 \\sigma$') ) )) +
+  xlab("") + geom_hline(yintercept = 0, colour ="black") +
+  geom_segment(aes(x = 0, y=0, xend=0, yend=dnorm(0,mean=0,sd=1)), colour ="black",linetype="dashed") +
+  theme(axis.text = element_text(size = 15), 
+        panel.background = element_rect(fill="white"),axis.ticks = element_blank())  +
+  geom_segment(aes(x=-3, y=0, xend = -3, yend = dnorm(mean=0, sd=1, x=-3)), colour="red",size =1.20, linetype ="dashed" ) +
+  geom_segment(aes(x=3, y=0, xend = 3, yend = dnorm(mean=0, sd=1, x=3)), colour="red",size =1.20, linetype ="dashed" ) +
+  geom_area(stat = "function", fun = dnorm, args = list(0, 1), 
+            fill = "red", xlim = c(-3, 3), alpha=0.2)
+
+```
+
+### Distribución Normal Estándar {#dne}
+
+Supongamos que el tiempo para llenar la declaración del impuesto a la renta se distribuye normalmente con media $80$ y desviación $20$ y que nos interesa determinar la probabilidad de que una declaración sea correctamente llenada entre 50 y 90 minutos. Formalmente si definimos a $X=\text{Tiempo para llenar una declaración}$ podemos decir que $X \sim \mathcal{N}\left(80,20\right)$, nuestro interés es calcular $P\left(50< X <90\right)$ si hacemos el cálculo a mano debemos determinar el área bajo la función definida en la ecuación \@ref(eq:normalpdf) entre $50$ y $90$ para $\mu=80$ y $\sigma=20$ esto requeriría de un trabajo fuerte desde el punto de vista matemático. 
+
+Otra solución sería tener una tabla que contenga las probabilidades de la distribución normal, pero existe una cantidad infinita de distribuciones normales tomando en cuenta las combinaciones posibles de $\mu$ y $\sigma$. La solución es tener una distribución normal que represente a todas las distribuciones normales, dicha distribución recibe el nombre de **distribución normal estándar**.
+
+La distribución normal estándar se caracteriza por tener media $0$ y desviacion $1$, y se representa con la letra $Z$. Dicho de otra forma $Z \sim \mathcal{N}\left(0,1\right)$. En la figura \@ref(fig:normalz) se presenta el gráfico de la normal estándar. 
+Cualquier variable normal $X\sim \mathcal{N}\left(\mu,\sigma\right)$ se puede transformar a una normal estándar (estandarizar) realizando la operación:
+
+\begin{equation} 
+z=\dfrac{x-\mu}{\sigma}
+(\#eq:normalest)
+\end{equation}
+
+Una vez estandarizado se puede determinar la probabilidad deseada usando cualquier tabla de la normal estándar. En este texto no hacemos uso de tablas puesto que los cálculos de probabilidades los haremos utilizando R, es importante que el lector aprenda o refresque la noción de la distribución normal estándar ya que aparecerá constantemente en los siguientes capítulos. 
+
+```{r normalz, out.width = "50%", echo=FALSE,fig.cap="Normal Estándar", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1.20) +
+  ylab("") +   scale_y_continuous(breaks = NULL) + 
+  xlab("") + geom_hline(yintercept = 0, colour ="black") +
+  geom_segment(aes(x = 0, y=0, xend=0, yend=dnorm(0,mean=0,sd=1)), colour ="black",linetype="dashed") +
+  theme(axis.text = element_text(size = 15),axis.ticks = element_blank(), 
+        panel.background = element_rect(fill="white"))  
+
+```
+
+## Distribución $t$ de Student
+
+La distribución $t$ de Student fue obtenida por William S. Gosset en 1908, quien publicó sus hallazgos bajo el seudónimo "Student" y usó la letra $t$ para representar la variable aleatoria, de aquí la **distribución $t$ de Student** o **$t$ de Student**  simplemente. La función de densidad de la distribución $t$ se define
+
+\begin{equation}
+f\left(t\right)=\dfrac{\Gamma\left[\dfrac{\nu+1}{2}\right]}{\sqrt{\nu \pi} \; \Gamma\left(\dfrac{\nu}{2}\right)}\left[1 + \dfrac{t^2}{\nu} \right]^{\frac{\nu+1}{2}}
+(\#eq:studentpdf)
+\end{equation}
+
+donde $\nu$, (la letra griega *nu*) representa el parámetro de la distribución $t$ llamado **grados de libertad** y $\Gamma$ es la función Gamma cuya definición no será abordada en este texto. 
+En la figura \@ref(fig:tstudent) se muestra el gráfico de dos distribuciones $t$ de Student para dos valores diferentes de grados de libertad, la curva de color rojo representa una $t$ con 3 grados de libertad y la de color verde con $9$ grados de libertad. Se puede observar que la distribución $t$ tiene una forma similar a la normal estándar porque es simétrica respecto a $0$ (lo que implica que la media es $0$) y tiene forma de campana. 
+
+En la figura \@ref(fig:tz) se muestra de color azul la curva de la normal estándar junto con las distribuciones $t$ mostradas anteriormente se observa que las $t$ tienen más probabilidad en las colas y menos en el centro. Además se puede observar que $t$ se aproxima a $z$ a medida que aumentan los grados de libertad, los grados de libertad están relacionados al tamaño muestral por lo que $t$ converge a $z$ para tamaños muestrales grandes. En el capítulo \@ref(icph) se hace uso de esta distribución. 
+
+
+```{r tstudent, out.width = "50%", echo=FALSE,fig.cap="$t$ de Student", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  ylab("") +   scale_y_continuous(breaks = NULL)  + scale_x_continuous(breaks=c(0)) +
+  stat_function(fun = "dt", n = 10000, args = list(df = 3, ncp=0), colour ="red", size=1) +
+  stat_function(fun = "dt", n = 10000, args = list(df = 9, ncp=0), colour ="green", size=1) + xlab("") + 
+  theme(axis.text = element_text(size = 15), panel.background = element_rect(fill="white"),axis.ticks = element_blank()) +
+ geom_hline(yintercept = 0, colour ="black") 
+
+```
+
+
+```{r tz, out.width = "50%", echo=FALSE,fig.cap="$t$ de Student comparada con la Normal Estándar", fig.align='center',fig.pos = 'h!'}
+
+ggplot(data = data.frame(x = c(-4, 4)), aes(x)) +
+  stat_function(fun = dnorm, n = 10000, args = list(mean = 0, sd = 1), colour ="blue", size=1) +
+  ylab("") +   scale_y_continuous(breaks = NULL,limits = c(0,0.4))  + scale_x_continuous(breaks=c(0)) +
+  stat_function(fun = "dt", n = 10000, args = list(df = 3, ncp=0), colour ="red", size=1) +
+  stat_function(fun = "dt", n = 10000, args = list(df = 9, ncp=0), colour ="green", size=1) + xlab("") + 
+  theme(axis.text = element_text(size = 15), panel.background = element_rect(fill="white"),axis.ticks = element_blank()) +
+ geom_hline(yintercept = 0, colour ="black") 
+```
+
+## Distribución normal y $t$ de Student en R
+
+Todas las distribuciones que se manejan en R tienen cuatro funciones. Existe un nombre base, por ejemplo para la normal el nombre base es `norm`. La base es antecedida por cualquiera de las siguientes cuatro letras. 
+
+* `p` por _probabilidad_, en referencia a la función de distribución acumulada
+* `q` por _cuantil_, en este caso se refiere a la función de distribución acumulada inversa. Dado un valor de probabilidad nos devuelve el valor de la distribución que acumula esa probabilidad.
+* `d` por _densidad_. 
+* `r` por _aleatorio_, una variable aleatoria con la distribución especificada. 
+
+Para el caso de la distribución normal y la distribución $t$ de Student entonces las funciones son: 
+
+
+* `pnorm`, `qnorm`, `dnorm` y `rnorm`
+* `pt`, `qt`, `dt`, `rt`
+
+### Ejemplos
+
+El cálculo de probabilidades con la distribución normal se hace con la función `pnorm`. La función `pnorm` se utiliza de la siguiente forma `pnorm(q, mean = 0, sd = 1, lower.tail = TRUE, log.p = FALSE)` las opciones que van dentro de la función son:
+
+* `q`: que es el valor para el cual se quiere determinar la probabilidad.
+* `mean`: es el valor de la media de la distribución, el valor por defecto es $0$ que corresponde a la media de la distribución normal estándar. 
+* `sd`: es el valor de la desviación de la distribución, el valor por defecto es $1$ que corresponde a la desviación de la distribución normal estándar. 
+* `lower.tail`: se puede indicar "TRUE" o "FALSE", si es verdadero ("TRUE") se determina $P\left(X \leq q \right)$ y si es falso ("FALSE") se determina $P\left( X > q \right)$
+* `log.p`: si es verdadero las probabilidades se dan en logaritmos.
+
+En la sección \@ref(dne) se puso un ejemplo sobre el tiempo de llenado de una declaración del impuesto a la renta. Recordemos que se partía de la suposición que el tiempo de llenado de la declaración del impuesto a la renta sigue una distribución normal con media $80$ y desviación $20$ minutos. y se quería calcular la probabilidad de que el llenado de una declaración se dé entre 50 y 90 minutos, en terminos matemáticos deseamos calcular $P\left( 50 \leq X \leq 90 \right)$. El cálculo de la probabilidad se muestra a continuación.
+
+```{r, echo=TRUE}
+pnorm(90,mean=80,sd=20)-pnorm(50,mean=80,sd=20)
+```
+
+No hemos incluido las opciones `lower.tail` o  `log.p` ya que son opciones en las que estamos usando los valores que por defecto tiene la función configurada. Si deseamos calcular la probabilidad que el tiempo de llenado de la declaración sea más de 100 minutos, para esto debemos indicar la opción `lower.tail = FALSE`.
+
+```{r, echo=TRUE}
+pnorm(100,mean=80,sd=20, lower.tail = FALSE)
+```
+
+Supongamos que se quieren simular 100 valores que siguen la distribución normal con media $80$ y desviación $20$, utilizamos entonces la función `rnorm`, esta función se usa de la siguiente forma `rnorm(n, mean = 0, sd = 1)`
+
+```{r, echo=TRUE}
+rnorm(100, mean = 80, sd=20)
+```
+
+Si queremos simular valores de una distribución $t$ de Student utilizamos la función `rt`, que recibe los parámetros `rt(n, df, ncp)`. El parámetro `ncp` es la no centralidad. La distribución $t$ que hemos revisado tiene su parámetro de no centralidad igual a $0$. 
+
+```{r, echo=TRUE}
+rt(100, df = 19)
+```
+
+
